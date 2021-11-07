@@ -26,8 +26,7 @@ SECRET_KEY = '%i8)7d5n#bv(rtxy#nw_18$tv7^8d_akieug)q$ro-zz#2d8@o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-import django_heroku
-django_heroku.settings(locals())
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -127,3 +126,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+import django_heroku
+django_heroku.settings(locals())
