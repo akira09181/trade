@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block header %}
+<h1>結果は日本円：{{ resultjpy }}円</br>ビットコイン：{{resultcoin}}</br>合計{{resultend}}円相当、元手から{{bai}}倍です</h1>
+
+{% endblock header %}
+{% block content %}
+<table border = "2">
+<th>日時</th>
+<th>日本円</th>
+<th>BITCOIN</th>
+{% for i in result %}
+<tr>
+<td>{{i.0}}</td>
+<td>{{i.1}}</td>
+<td>{{i.2}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock content %}
+
+
+

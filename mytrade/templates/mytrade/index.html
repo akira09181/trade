@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block header %}
+<h1>投資シミュレーション</h1>
+{% endblock header %}
+{% block content %}
+bitcoinの投資に興味があり、インジケータの使い方を考えたくてシミュレーションプログラムを作りました。
+１００万円をもってスタートして、インジケータのサインで売り買いするプログラムを回した時に、利益はどうなるのか？
+ただ持っているだけよりも多くの利益が出るのか検証したいと思います。
+※日足のトレードで、０時時点の相場でトレードするものとします。
+<h2>・<a href = "https://www.jibunbank.co.jp/products/foreign_deposit/chart/help/sma/">単純移動平均線</a></h2></br>
+ここでは、ゴールデンクロスが起きたら買って、デットクロスが起きた時に売ることとします。
+<form action="/mytrade/sma">
+<p>期間の短い移動平均線（日）：<input type = "text" name="short"></p>
+<p>期間の長い移動平均線（日）：<input type = "text" name="long"></p>
+<p>一回の取引量（取引可能量からの％）：<input type ="text" name = "val"></p>
+
+<p><input type = "submit"><input type = "reset" value="入力内容をリセットする"></br>
+</form>
+↓対象の過去データ
+<table border="2">
+<th>日時</th>
+<th>始値</th>
+<th>高値</th>
+<th>安値</th>
+<th>終値</th>
+<th>出来高</th>
+{% for i in value %}
+<tr>
+
+    <td>{{i.5}}</td>
+    <td>{{i.4}}</td>
+    <td>{{i.3}}</td>
+    <td>{{i.2}}</td>
+    <td>{{i.1}}</td>
+    <td>{{i.0}}</td>
+
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}
