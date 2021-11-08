@@ -31,7 +31,7 @@ def sma(request):
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
-            li.append(value[i*6+j-1].get_text())
+            li.append(value[i*6+j].get_text())
         lists.append(li)
     short = request.GET["short"]
     long = request.GET["long"]
@@ -48,7 +48,7 @@ def sma(request):
     bitcoin = 0
     buycoin=0
     buyjpy=0
-    result = [["",0,0]for i in range(len(lists)-lo)]
+    result = [["",0,0]for i in range(len(lists))-lo]
     for i in range(len(lists)-lo):
         avl = 0
         avs = 0
@@ -69,18 +69,12 @@ def sma(request):
             buyjpy = bitcoin*va
             bitcoin-=bitcoin*va
             jpy += buyjpy * int(lists[i][2])
-        result[i-lo][0]=lists[i][1][:10]
+        result[i][0]=lists[i][1][:10]
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = bitcoin*int(lists[-1][2])+jpy
-    bai = resultend/1000000        
-            
-            
-            
-            
-        
-    
-    context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
+    bai = resultend/1000000            
+    context = {"result":result,"resultjpy":int(jpy),"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
     return render(request,"mytrade/sma.html",context)
 def results(request):
     return HttpResponse("This is result")
