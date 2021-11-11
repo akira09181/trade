@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block header %}
 <h1>結果は日本円：{{ resultjpy }}円</br>ビットコイン：{{resultcoin}}</br>合計{{resultend}}円相当、元手から{{bai}}倍です</h1>
-
+</br>{{countsell+countbuy }} 回取引しました。
 {% endblock header %}
 {% block content %}
 <table border = "2">

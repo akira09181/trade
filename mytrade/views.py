@@ -153,8 +153,9 @@ def bbreak(request):
     bitcoin=0
     buycoin=0
     buyjpy=0
-    count=0
-    count1 = 0
+    countbuy=0
+    countsell = 0
+    
     result = [["",0,0]for i in range(len(lists))]
     for i in range(len(lists)):
         ave = 0
@@ -172,21 +173,21 @@ def bbreak(request):
                 buycoin = jpy*va
                 jpy-=buycoin
                 bitcoin+= buycoin/int(lists[i][1])
-                count +=1
+                countbuy +=1
                 print(i,"0",ave,dtb,lists[i][1])
             elif int(lists[i][1]) < ave-2*dtb:
                 buyjpy = bitcoin*va
                 bitcoin-=buyjpy
                 jpy+=buyjpy*int(lists[i][1])
-                count1+=1
-                print(count)
+                countsell+=1
         result[i][0]=lists[i][0][:10]
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = int(bitcoin*int(lists[-1][1])+jpy)
     bai= resultend/1000000
     jpy = int(jpy)
-    context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai }
+    context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai,
+             "countbuy":countbuy,"countsell":countsell }
     return render(request,"mytrade/result.html",context)
 def results(request):
     return HttpResponse("This is result")
