@@ -23,7 +23,7 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 順張りは、ボラティリティ・ブレイクアウトがおきたら買い、売りとします。
 <h3>・逆張り</h3>
 <form action="/mytrade/breverse">
-<p>移動平均線（日）:<input type = "text" name="day"></p>
+<p>移動平均線（日）：<input type = "text" name="day"></p>
 <p>一回の取引量（取引可能量からの％）：<input type = "text" name =  "val"></p>
 <p><input type = "submit"><input type = "reset" value="リセット"></p></br>
 </form>
@@ -32,6 +32,13 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 <p>移動平均線（日）：<input type = "text" name ="day"></p>
 <p>一回の取引量（取引可能量からの％）：<input type = "text" name = "val"></p>
 <p><input type = "submit"><input type = "reset" value = "リセット"></p></br>
+</form>
+<h2>・<a href = "https://moneyworld.jp/news/05_00053723_news">MACD</a></h2></br>
+ゴールデンクロスで買い、デットクロスで売ります。
+<form action = "/mytrade/macd">
+<p>短期指数平滑移動平均線（日）：<input type = "text" name = "short"></p>
+<p>長期指数平滑移動平均線（日）：<input type = "text" name = "long"></p>
+<p><input type = "submit"><input type = "reset"value="リセット"></p>
 </form>
 ↓対象の過去データ
 <table border="2">

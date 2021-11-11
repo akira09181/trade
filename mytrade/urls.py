@@ -7,4 +7,5 @@ urlpatterns = [
     path('sma',views.sma,name="sma"),
     path('breverse',views.breverse,name="breverse"),
     path('bbreak',views.bbreak,name="bbreak"),
+    path('macd',views.macd,name='macd'),
 ]

@@ -189,5 +189,65 @@ def bbreak(request):
     context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai,
              "countbuy":countbuy,"countsell":countsell }
     return render(request,"mytrade/result.html",context)
+def macd(request):
+    
+    response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
+    bs = BeautifulSoup(response.text, "html.parser")
+    value = bs.find_all("td")
+    lists = []
+    num = int(len(value)/6)
+    for i in range(int(len(value)/6)):
+        li = []
+        for j in range(6):
+            li.append(value[i*6+j].get_text())
+        lists.append(li)
+    short = request.GET["short"]
+    long = request.GET["long"]
+    val = request.GET["val"]
+    sh = int(short)
+    lo = int(long)
+    va = int(val)/100
+    trandflag=0
+    avl = 0
+    avs = 0
+    sellf = 0
+    buyf = 0
+    jpy = 1000000
+    bitcoin = 0
+    buycoin=0
+    buyjpy=0
+    result = [["",0,0]for i in range(len(lists))]
+    for i in range(len(lists)):
+        avl = 0
+        avs = 0
+        countl = 0
+        counts = 0
+        if i >= lo:
+            for j in range(lo):
+                avl += int(lists[i-j][2])*(lo-j)
+                countl+=(lo-j)
+            avl/=countl
+            for j in range(sh):
+                avs += int(lists[i-j][2])*(sh-j)
+                counts+=(sh-j)
+            avs/=counts
+        if avl < avs and trandflag == 0:
+            trandflag=1
+            buycoin = jpy*va
+            jpy-=buycoin
+            bitcoin+= buycoin/int(lists[i][2])
+        if avl > avs and trandflag == 1:
+            trandflag = 0
+            buyjpy = bitcoin*va
+            bitcoin-=bitcoin*va
+            jpy += buyjpy * int(lists[i][2])
+        result[i][0]=lists[i][0][:10]
+        result[i][1]=jpy
+        result[i][2]=bitcoin
+    resultend = int(bitcoin*int(lists[-1][2])+jpy)
+    bai = resultend/1000000 
+    jpy = int(jpy)         
+    context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
+    return render(request,"mytrade/rusult.html",context)
 def results(request):
     return HttpResponse("This is result")
