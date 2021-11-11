@@ -6,4 +6,5 @@ urlpatterns = [
     path('results',views.results,name='results'),
     path('sma',views.sma,name="sma"),
     path('breverse',views.breverse,name="breverse"),
+    path('bbreak',views.bbreak,name="bbreak"),
 ]
