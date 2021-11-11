@@ -168,7 +168,6 @@ def bbreak(request):
             if int(lists[i][1])>ave+2*dtb:
                 buycoin = jpy*va
                 jpy-=buycoin
-                
                 bitcoin+= buycoin/int(lists[i][1])
             elif int(lists[i][1])<ave-2*dtb:
                 buyjpy = bitcoin*va
