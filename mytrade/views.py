@@ -91,7 +91,7 @@ def breverse(request):
     day = request.GET["day"]
     val = request.GET["val"]
     da = int(day)
-    va = int(val)
+    va = int(val)/100
     jpy = 1000000
     ave = 0
     dtb = 0
@@ -99,30 +99,32 @@ def breverse(request):
     buycoin=0
     buyjpy=0
     result = [["",0,0]for i in range(len(lists))]
-    for i in range(lists):
+    for i in range(len(lists)):
         if i >da:
             for j in range(da):
-                ave += int(lists[i-j][2])
+                ave += int(lists[i-j][1])
             ave/=da
             for j in range(da):
-                dtb += (int(lists[i-j][2])-ave)**2
+                dtb += (int(lists[i-j][1])-ave)**2
             dtb/=da
+            
             dtb=math.sqrt(dtb)
-            if int(lists[i][2])<int(lists[i][2])-dtb*2:
+            print(lists[i],ave,dtb)
+            if int(lists[i][1])<ave-dtb*2:
                 buycoin = jpy*va
                 jpy-=buycoin
-                bitcoin+= buycoin/int(lists[i][2])
-            elif int(lists[i][2])>int(lists[i][2])+dtb*2:
+                bitcoin+= buycoin/int(lists[i][1])
+            elif int(lists[i][1])>ave+dtb*2:
                 buyjpy = bitcoin*va
                 bitcoin-=buyjpy
-                jpy+=buyjpy*int(lists[i][2])
+                jpy+=buyjpy*int(lists[i][1])
         result[i][0]=lists[i][0][:10]
         result[i][1]=jpy
         result[i][2]=bitcoin
-    resultend = int(bitcoin*int(lists[-1][2])+jpy)
+    resultend = int(bitcoin*int(lists[-1][1])+jpy)
     bai= resultend/1000000
     jpy = int(jpy)
     context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai}
-    return render(request,"mytrade/reverse.html",context)
+    return render(request,"mytrade/breverse.html",context)
 def results(request):
     return HttpResponse("This is result")
