@@ -162,12 +162,12 @@ def bbreak(request):
         if i > da:
             for j in range(da):
                 ave += int(lists[i-j][1])
-                ave/=da
+            ave/=da
             for j in range(da):
                 dtb += (int(lists[i-j][1])-ave)**2
-                dtb/=da
+            dtb/=da
             
-                dtb=math.sqrt(dtb)
+            dtb=math.sqrt(dtb)
             if int(lists[i][1]) > ave+2*dtb:
                 buycoin = jpy*va
                 jpy-=buycoin
