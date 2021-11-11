@@ -153,9 +153,12 @@ def bbreak(request):
     bitcoin=0
     buycoin=0
     buyjpy=0
-    
+    count=0
+    count1 = 0
     result = [["",0,0]for i in range(len(lists))]
     for i in range(len(lists)):
+        ave = 0
+        dtb = 0
         if i > da:
             for j in range(da):
                 ave += int(lists[i-j][1])
@@ -165,14 +168,18 @@ def bbreak(request):
                 dtb/=da
             
                 dtb=math.sqrt(dtb)
-            if int(lists[i][1])>ave+2*dtb:
+            if int(lists[i][1]) > ave+2*dtb:
                 buycoin = jpy*va
                 jpy-=buycoin
                 bitcoin+= buycoin/int(lists[i][1])
-            elif int(lists[i][1])<ave-2*dtb:
+                count +=1
+                print(i,"0",ave,dtb,lists[i][1])
+            elif int(lists[i][1]) < ave-2*dtb:
                 buyjpy = bitcoin*va
                 bitcoin-=buyjpy
                 jpy+=buyjpy*int(lists[i][1])
+                count1+=1
+                print(count)
         result[i][0]=lists[i][0][:10]
         result[i][1]=jpy
         result[i][2]=bitcoin
