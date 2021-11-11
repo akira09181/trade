@@ -86,8 +86,10 @@ def breverse(request):
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
+            
             li.append(value[i*6+j].get_text())
-        lists.append(li)
+        if li[1]!="0":    
+            lists.append(li)
     day = request.GET["day"]
     val = request.GET["val"]
     da = int(day)
@@ -98,6 +100,7 @@ def breverse(request):
     bitcoin=0
     buycoin=0
     buyjpy=0
+    
     result = [["",0,0]for i in range(len(lists))]
     for i in range(len(lists)):
         if i >da:
@@ -109,10 +112,11 @@ def breverse(request):
             dtb/=da
             
             dtb=math.sqrt(dtb)
-            print(lists[i],ave,dtb)
+            
             if int(lists[i][1])<ave-dtb*2:
                 buycoin = jpy*va
                 jpy-=buycoin
+                print(buycoin,lists[i][1])
                 bitcoin+= buycoin/int(lists[i][1])
             elif int(lists[i][1])>ave+dtb*2:
                 buyjpy = bitcoin*va
