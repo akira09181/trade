@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 from bs4 import BeautifulSoup
-
+import math
 
 
 # Create your views here.
@@ -77,5 +77,52 @@ def sma(request):
     jpy = int(jpy)         
     context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
     return render(request,"mytrade/sma.html",context)
+def breverse(request):
+    response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
+    bs = BeautifulSoup(response.text, "html.parser")
+    value = bs.find_all("td")
+    lists = []
+    num = int(len(value)/6)
+    for i in range(int(len(value)/6)):
+        li = []
+        for j in range(6):
+            li.append(value[i*6+j].get_text())
+        lists.append(li)
+    day = request.GET["day"]
+    val = request.GET["val"]
+    da = int(day)
+    va = int(val)
+    jpy = 1000000
+    ave = 0
+    dtb = 0
+    bitcoin=0
+    buycoin=0
+    buyjpy=0
+    result = [["",0,0]for i in range(len(lists))]
+    for i in range(lists):
+        if i >da:
+            for j in range(da):
+                ave += int(lists[i-j][2])
+            ave/=da
+            for j in range(da):
+                dtb += (int(lists[i-j][2])-ave)**2
+            dtb/=da
+            dtb=math.sqrt(dtb)
+            if int(lists[i][2])<int(lists[i][2])-dtb*2:
+                buycoin = jpy*va
+                jpy-=buycoin
+                bitcoin+= buycoin/int(lists[i][2])
+            elif int(lists[i][2])>int(lists[i][2])+dtb*2:
+                buyjpy = bitcoin*va
+                bitcoin-=buyjpy
+                jpy+=buyjpy*int(lists[i][2])
+        result[i][0]=lists[i][0][:10]
+        result[i][1]=jpy
+        result[i][2]=bitcoin
+    resultend = int(bitcoin*int(lists[-1][2])+jpy)
+    bai= resultend/1000000
+    jpy = int(jpy)
+    context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai}
+    return render(request,"mytrade/reverse.html",context)
 def results(request):
     return HttpResponse("This is result")
