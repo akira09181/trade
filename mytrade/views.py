@@ -248,6 +248,6 @@ def macd(request):
     bai = resultend/1000000 
     jpy = int(jpy)         
     context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
-    return render(request,"mytrade/rusult.html",context)
+    return render(request,"mytrade/result.html",context)
 def results(request):
     return HttpResponse("This is result")
