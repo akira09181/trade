@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
-
+{% load bootstrap4 %}
 {% block header %}
-<h1>投資シミュレーション</h1>
+
 {% endblock header %}
 {% block content %}
 bitcoinの投資に興味があり、インジケータの使い方を考えたくてシミュレーションプログラムを作りました。
-１００万円をもってスタートして、インジケータのサインで売り買いするプログラムを回した時に、利益はどうなるのか？
+投資額を決めてスタートして、インジケータのサインで売り買いするプログラムを回した時に、利益はどうなるのか？
 ただ持っているだけよりも多くの利益が出るのか検証したいと思います。
 ※日足のトレードで、０時時点の相場でトレードするものとします。
 <h2>・<a href = "https://www.jibunbank.co.jp/products/foreign_deposit/chart/help/sma/">単純移動平均線</a></h2></br>
 ここでは、ゴールデンクロスが起きたら買って、デットクロスが起きた時に売ることとします。
 <form action="/mytrade/sma">
-<p>期間の短い移動平均線（日）：<input type = "text" name="short"></p>
-<p>期間の長い移動平均線（日）：<input type = "text" name="long"></p>
-<p>一回の取引量（取引可能量からの％）：<input type ="text" name = "val"></p>
-
-<p><input type = "submit"><input type = "reset" value="リセット"></br>
+{% bootstrap_form SmaForm layout='horizontal' %}
+<button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a></h2></br>
 SMA（単純移動平均線）をとり、それを基準に偏差を計算します。逆張りと順張りで検証します。
@@ -23,23 +20,19 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 順張りは、ボラティリティ・ブレイクアウトがおきたら買い、売りとします。
 <h3>・逆張り</h3>
 <form action="/mytrade/breverse">
-<p>移動平均線（日）：<input type = "text" name="day"></p>
-<p>一回の取引量（取引可能量からの％）：<input type = "text" name =  "val"></p>
-<p><input type = "submit"><input type = "reset" value="リセット"></p></br>
+{% bootstrap_form BreForm layout='horizontal' %}
+<button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h3>・順張り</h3>
 <form action="/mytrade/bbreak">
-<p>移動平均線（日）：<input type = "text" name ="day"></p>
-<p>一回の取引量（取引可能量からの％）：<input type = "text" name = "val"></p>
-<p><input type = "submit"><input type = "reset" value = "リセット"></p></br>
+{% bootstrap_form BreForm layout='horizontal' %}
+<button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a href = "https://moneyworld.jp/news/05_00053723_news">MACD</a></h2></br>
 ゴールデンクロスで買い、デットクロスで売ります。
 <form action = "/mytrade/macd">
-<p>短期指数平滑移動平均線（日）：<input type = "text" name = "short"></p>
-<p>長期指数平滑移動平均線（日）：<input type = "text" name = "long"></p>
-<p>一回の取引量（取引可能量からの％）：<input type = "text" name = "val"></p>
-<p><input type = "submit"><input type = "reset"value="リセット"></p>
+{% bootstrap_form SmaForm layout='horizontal' %}
+<button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 ↓対象の過去データ
 <table border="2">

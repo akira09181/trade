@@ -3,10 +3,14 @@ from django.http import HttpResponse
 import requests
 from bs4 import BeautifulSoup
 import math
+from .models import Input
+from .forms import SmaForm,BreForm
 
 
 # Create your views here.
 def index(request):
+    Bre = BreForm(request.GET)
+    Sma = SmaForm(request.GET)
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
     bs = BeautifulSoup(response.text, "html.parser")
     value = bs.find_all("td")
@@ -17,10 +21,13 @@ def index(request):
         for j in range(6):
             li.append(value[-(i*6+j)-1].get_text())
         lists.append(li)
+        c = Input(date=li[5][:10],start=int(li[4]),high=int(li[3]),low=int(li[2]),end=int(li[1]),volume=float(li[0]))
+        c.save()
+        
     
         
     
-    context = {"value":lists,"num":num}
+    context = {"value":lists,"num":num,"BreForm":BreForm,"SmaForm":SmaForm}
     return render(request,"mytrade/index.html",context)
 def sma(request):
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
@@ -44,7 +51,8 @@ def sma(request):
     avs = 0
     sellf = 0
     buyf = 0
-    jpy = 1000000
+    sjpy = int(request.GET['sjpy'])
+    jpy = sjpy
     bitcoin = 0
     buycoin=0
     buyjpy=0
@@ -73,7 +81,7 @@ def sma(request):
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = int(bitcoin*int(lists[-1][2])+jpy)
-    bai = resultend/1000000 
+    bai = resultend/sjpy
     jpy = int(jpy)         
     context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
     return render(request,"mytrade/sma.html",context)
@@ -94,7 +102,8 @@ def breverse(request):
     val = request.GET["val"]
     da = int(day)
     va = int(val)/100
-    jpy = 1000000
+    sjpy = int(request.GET['sjpy'])
+    jpy=sjpy
     ave = 0
     dtb = 0
     bitcoin=0
@@ -126,7 +135,7 @@ def breverse(request):
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = int(bitcoin*int(lists[-1][1])+jpy)
-    bai= resultend/1000000
+    bai= resultend/sjpy
     jpy = int(jpy)
     context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai}
     return render(request,"mytrade/breverse.html",context)
@@ -147,7 +156,8 @@ def bbreak(request):
     val = request.GET["val"]
     da = int(day)
     va = int(val)/100
-    jpy = 1000000
+    sjpy = int(request.GET['sjpy'])
+    jpy=sjpy
     ave = 0
     dtb = 0
     bitcoin=0
@@ -184,7 +194,7 @@ def bbreak(request):
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = int(bitcoin*int(lists[-1][1])+jpy)
-    bai= resultend/1000000
+    bai= resultend/sjpy
     jpy = int(jpy)
     context={"resultend":resultend,"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"bai":bai,
              "countbuy":countbuy,"countsell":countsell }
@@ -212,7 +222,8 @@ def macd(request):
     avs = 0
     sellf = 0
     buyf = 0
-    jpy = 1000000
+    sjpy = int(request.GET['sjpy'])
+    jpy=sjpy
     bitcoin = 0
     buycoin=0
     buyjpy=0
@@ -245,7 +256,7 @@ def macd(request):
         result[i][1]=jpy
         result[i][2]=bitcoin
     resultend = int(bitcoin*int(lists[-1][2])+jpy)
-    bai = resultend/1000000 
+    bai = resultend/sjpy
     jpy = int(jpy)         
     context = {"result":result,"resultjpy":jpy,"resultcoin":bitcoin,"resultend":resultend,"bai":bai}
     return render(request,"mytrade/result.html",context)

@@ -7,13 +7,34 @@
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
    <title>Trade Simulation</title>
-  
+  <style> body{
+    padding-top 80px;
+  }
+  </style>
  </head>
  <body>
+ <nav class="navbar navbar-expand-sm navbar-dark bg-info mt-3 mb-3">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+  <span class ="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse">
+  <ul class="navbar-nav">
+  <li class="nav-item avtive">
+  <h2>
+  <a class = "nav-link" href="/mytrade">COIN Simulation</a>
+  </h2>
+  </li>
+  <li class = "nav-item avtive">
+  <a class = "nav-link" href="https://iwa-ju.herokuapp.com/ju/">円/ドルへ</a>
+  </li>
+  </ul>
+  </nav>
+  <div class="container">
    {% block header %}
    {% endblock header %}
    {% block content %}
    {% endblock content %}
+   </div>
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
