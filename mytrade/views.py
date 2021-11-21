@@ -262,3 +262,51 @@ def macd(request):
     return render(request,"mytrade/result.html",context)
 def results(request):
     return HttpResponse("This is result")
+
+def rsi(request):
+    c = Input.objects.all().values().order_by('date')
+    day = int(request.GET['day'])
+    val = int(request.GET['val'])/100
+    sjpy = int(request.GET['sjpy'])
+    jpy=sjpy
+    coin=0
+    ave = 0
+    plus=0
+    minus=0
+    rsi=0
+    buyjpy=0
+    buycoin=0
+    result=[["",0,0]for i in range(len(c))]
+    countbuy=0
+    countsell=0
+    for i in range(len(c)):
+        minus=0
+        plus=0
+        if i >day:
+            for j in range(day):
+                
+                a = int(c[i-j-1]['start'])-int(c[i-j]['start'])
+                if a < 0:
+                    minus-=a
+                else:
+                    plus+=a
+            minus/=day
+            plus/=day
+            rsi=plus/(plus+minus)*100
+            if rsi < 30:
+                buycoin=jpy*val
+                jpy-=buycoin
+                coin+=buycoin/int(c[i]['start'])
+                countbuy+=1
+            if rsi > 70:
+                buyjpy=coin*val
+                jpy+=buyjpy*int(c[i]['start'])
+                coin-=buyjpy
+                countsell+=1
+        result[i][0]=c[i]['date']
+        result[i][1]=jpy
+        result[i][2]=coin
+        end=int(jpy+coin*(c[len(c)-1]['start']))
+        bai=end/sjpy
+    context={'result':result,'resultend':end,'bai':bai,'resultjpy':jpy,'resultcoin':coin,'countbuy':countbuy,'countsell':countsell}
+    return render(request,"mytrade/result.html",context)

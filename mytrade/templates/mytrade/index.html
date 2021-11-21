@@ -34,6 +34,12 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 {% bootstrap_form SmaForm layout='horizontal' %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
+<h2>・<a href = "https://kabu.com/investment/guide/technical/08.html">RSI</a></h2></br>
+70以上で売り、30以下で買いとします。
+<form action = "/mytrade/rsi">
+{% bootstrap_form BreForm layout='horizontal' %}
+<button type="submit" class='btn btn-outline-primary'>Simulation</button>
+</form>
 ↓対象の過去データ
 <table border="2">
 <tr>

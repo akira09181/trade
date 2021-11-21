@@ -8,4 +8,5 @@ urlpatterns = [
     path('breverse',views.breverse,name="breverse"),
     path('bbreak',views.bbreak,name="bbreak"),
     path('macd',views.macd,name='macd'),
+    path('rsi',views.rsi,name='rsi'),
 ]
