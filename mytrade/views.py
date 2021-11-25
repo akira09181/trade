@@ -72,7 +72,7 @@ def sma(request):
             buycoin = jpy*va
             jpy-=buycoin
             bitcoin+= buycoin/int(lists[i][2])
-        if avl > avs and trandflag == 1:
+        elif avl > avs and trandflag == 1:
             trandflag = 0
             buyjpy = bitcoin*va
             bitcoin-=bitcoin*va
@@ -283,8 +283,7 @@ def rsi(request):
         minus=0
         plus=0
         if i >day:
-            for j in range(day):
-                
+            for j in range(day):             
                 a = int(c[i-j-1]['start'])-int(c[i-j]['start'])
                 if a < 0:
                     minus-=a
@@ -306,7 +305,86 @@ def rsi(request):
         result[i][0]=c[i]['date']
         result[i][1]=jpy
         result[i][2]=coin
-        end=int(jpy+coin*(c[len(c)-1]['start']))
-        bai=end/sjpy
+    end=int(jpy+coin*(c[len(c)-1]['start']))
+    bai=end/sjpy
     context={'result':result,'resultend':end,'bai':bai,'resultjpy':jpy,'resultcoin':coin,'countbuy':countbuy,'countsell':countsell}
+    return render(request,"mytrade/result.html",context)
+def fib(request):
+    day = int(request.GET['day'])
+    val = int(request.GET['val'])/100
+    sjpy = int(request.GET['sjpy'])
+    jpy = sjpy
+    c = Input.objects.all().values().order_by('date')
+    coin,buyjpy,buycoin,countbuy,countsell,rsi,trand=0,0,0,0,0,0,0
+    minus,plus=0,0
+    result = [["",0,0]for i in range(len(c))]
+    high,low=[],[]
+    for i in range(len(c)):
+        minus=0
+        plus=0
+        high,low=[],[]
+        if i > day:
+            for j in range(day):
+                a = c[i-j-1]['start']-c[i-j]['start']
+                if a < 0:
+                    minus-=a
+                else:
+                    plus+=a
+            minus/=day
+            plus/=day
+            rsi=plus/(plus+minus)*100
+            if rsi > 70:
+                trand=1
+            elif rsi < 30:
+                trand=-1
+            for j in range(day):
+                high.append(c[i-j]['high'])
+                if c[i-j]['low']!=0:
+                    low.append(c[i-j]['low'])
+            high.sort()
+            low.sort()
+            h=high[-1]
+            l=low[0]
+            min=(h-l)*0.236+l
+            min2=(h-l)*0.382+l
+            mid =(h-l)*0.5+l
+            max2=(h-l)*0.618+l
+            max=(h-l)*0.784+l
+            hh=(h-l)*1.618+l
+            h2=(h-l)*1.382+l
+            hm=(h-l)*1.5+l
+            if trand==1:
+                if c[i]['low']<mid and c[i]['low']!=0:
+                    buycoin=jpy*val
+                    
+                    jpy-=buycoin
+                    coin+=buycoin/c[i]['low']
+                    countbuy+=1
+                if c[i]['high']>max:
+                    buyjpy=coin*val
+                    coin-=buyjpy
+                    jpy+=buyjpy*c[i]['high']
+                    countsell+=1
+                    
+                    
+            elif trand==-1:
+                if c[i]['low']<min and c[i]['low']!=0:
+                    buycoin=jpy*val
+                    jpy-=buycoin
+                    coin+=buycoin/c[i]['low']
+                    countbuy+=1
+                if c[i]['high']>max2:
+                    buyjpy=coin*val
+                    coin-=buyjpy
+                    jpy+=buyjpy*c[i]['high']
+                    countsell+=1
+                    
+        result[i][0]=c[i]['date']
+        result[i][1]=jpy
+        result[i][2]=coin
+    end=int(coin*c[len(c)-1]['start']+jpy)
+    bai=end/sjpy
+            
+    
+    context={'resultjpy':jpy,'resultcoin':coin,'countbuy':countbuy,'countsell':countsell,'result':result,'bai':bai}
     return render(request,"mytrade/result.html",context)

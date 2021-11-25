@@ -9,4 +9,5 @@ urlpatterns = [
     path('bbreak',views.bbreak,name="bbreak"),
     path('macd',views.macd,name='macd'),
     path('rsi',views.rsi,name='rsi'),
+    path('fib',views.fib,name="fib"),
 ]
