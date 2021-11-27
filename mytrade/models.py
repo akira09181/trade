@@ -17,6 +17,13 @@ class Input(models.Model):
     low = models.IntegerField()
     end = models.IntegerField()
     volume = models.FloatField()
+class InputHour(models.Model):
+    date = models.DateTimeField(primary_key=True)
+    start = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    end = models.IntegerField()
+    volume = models.FloatField()
 
 class Sma(models.Model):
     short = models.IntegerField(default=5,verbose_name="短い移動平均線")
@@ -25,6 +32,30 @@ class Sma(models.Model):
     sjpy = models.IntegerField(default=100000,verbose_name="初期の投資額")
         
 class Bre(models.Model):
-    day = models.IntegerField(default=20,verbose_name="移動平均線（日）")
+    day = models.IntegerField(default=20,verbose_name="移動平均線（足）")
     val = models.IntegerField(default=30,verbose_name="取引量（％）")
     sjpy = models.IntegerField(default=100000,verbose_name="初期の投資額")
+
+class Btc1M(models.Model):
+    date = models.DateTimeField(primary_key=True)
+    start = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    end = models.IntegerField()
+    volume = models.FloatField()
+
+class Btc5M(models.Model):
+    date = models.DateTimeField(primary_key=True)
+    start = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    end = models.IntegerField()
+    volume = models.FloatField()
+
+class Btc4H(models.Model):
+    date = models.DateTimeField(primary_key=True)
+    start = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    end = models.IntegerField()
+    volume = models.FloatField()

@@ -45,6 +45,12 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 {% bootstrap_form BreForm layout="horizontal" %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
+<h2>・<a href = "https://www.moneypartners.co.jp/support/tech/sct.html">ストキャスティクス</a></h2>
+<form action = "/mytrade/st">
+{% bootstrap_form BreForm layout="horizontal" %}
+<button type="submit" class = 'btn btn-outline-primary'>Simulation</button>
+</form>
+
 ↓対象の過去データ
 <table border="2">
 <tr>
@@ -57,12 +63,12 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 </tr>
 {% for i in value %}
 <tr>
-    <td>{{i.5}}</td>
-    <td>{{i.4}}</td>
-    <td>{{i.3}}</td>
-    <td>{{i.2}}</td>
-    <td>{{i.1}}</td>
-    <td>{{i.0}}</td>
+    <td>{{i.date}}</td>
+    <td>{{i.start}}</td>
+    <td>{{i.high}}</td>
+    <td>{{i.low}}</td>
+    <td>{{i.end}}</td>
+    <td>{{i.volume}}</td>
 </tr>
 
 {% endfor %}
