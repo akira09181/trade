@@ -535,35 +535,51 @@ def hour(request):
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=3600&after=1633072680')
     bs = BeautifulSoup(response.text,'html.parser')
     value = bs.find_all('td')
+    n = 0
     for i in range(int(len(value)/6)):
-        b = value[i*6].get_text()
+        b = value[(-i-1)*6].get_text()
         a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
-        c=InputHour(date=a,start=int(value[i*6+1].get_text()),high=int(value[i*6+2].get_text()),low=int(value[i*6+3].get_text()),end=int(value[i*6+4].get_text()),volume=float(value[i*6+5].get_text()))
+        c=InputHour(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
+        n = InputHour.objects.filter(date=a).count()
+        if n == 1:
+            break
         c.save()
     d = InputHour.objects.all().values().order_by('date')
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
     bs = BeautifulSoup(response.text,'html.parser')
     value = bs.find_all('td')
+    n=0
     for i in range(int(len(value)/6)):
-        b = value[i*6].get_text()
+        b = value[(-i-1)*6].get_text()
         a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
-        c=Btc1M(date=a,start=int(value[i*6+1].get_text()),high=int(value[i*6+2].get_text()),low=int(value[i*6+3].get_text()),end=int(value[i*6+4].get_text()),volume=float(value[i*6+5].get_text()))
+        n = Btc1M.objects.filter(date=a).count()
+        if n == 1:
+            break
+        c=Btc1M(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
         c.save()
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=300&after=1633072680')
     bs = BeautifulSoup(response.text,'html.parser')
     value = bs.find_all('td')
+    n=0
     for i in range(int(len(value)/6)):
-        b = value[i*6].get_text()
+        b = value[(-i-1)*6].get_text()
         a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
-        c=Btc5M(date=a,start=int(value[i*6+1].get_text()),high=int(value[i*6+2].get_text()),low=int(value[i*6+3].get_text()),end=int(value[i*6+4].get_text()),volume=float(value[i*6+5].get_text()))
+        n = Btc5M.objects.filter(date=a).count()
+        if n == 1:
+            break
+        c=Btc5M(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
         c.save()
     response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=14400&after=1593587880')
     bs = BeautifulSoup(response.text,'html.parser')
     value = bs.find_all('td')
+    n=0
     for i in range(int(len(value)/6)):
-        b = value[i*6].get_text()
+        b = value[(-i-1)*6].get_text()
         a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
-        c=Btc4H(date=a,start=int(value[i*6+1].get_text()),high=int(value[i*6+2].get_text()),low=int(value[i*6+3].get_text()),end=int(value[i*6+4].get_text()),volume=float(value[i*6+5].get_text()))
+        n = Btc4H.objects.filter(date=a).count()
+        if n == 1:
+            break
+        c=Btc4H(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
         c.save()
     context={'value':d,'BreForm':BreForm,"SmaForm":SmaForm}
     return render(request,'mytrade/index.html',context)
