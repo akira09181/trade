@@ -1,5 +1,7 @@
 from django.db import models
 from django import forms
+import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Users(models.Model):
@@ -17,6 +19,9 @@ class Input(models.Model):
     low = models.IntegerField()
     end = models.IntegerField()
     volume = models.FloatField()
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.date <= now
 class InputHour(models.Model):
     date = models.DateTimeField(primary_key=True)
     start = models.IntegerField()

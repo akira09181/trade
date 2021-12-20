@@ -16,12 +16,17 @@ def index(request):
     value = bs.find_all("td")
     lists = []
     num = int(len(value)/6)
+    n=0
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
             li.append(value[-(i*6+j)-1].get_text())
         lists.append(li)
+        n = Input.objects.filter(date=li[5][:10]).count()
+        if n == 1:
+            break
         c = Input(date=li[5][:10],start=int(li[4]),high=int(li[3]),low=int(li[2]),end=int(li[1]),volume=float(li[0]))
+        
         c.save()
     d = Input.objects.all().values().order_by('date')  
     
