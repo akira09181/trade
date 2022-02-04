@@ -536,7 +536,7 @@ def st(request):
     return render(request,'mytrade/result.html',context)
 def hour(request):
     k = 0
-    if k == 1:
+    if k == 0:
         response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=3600&after=1633072680')
         bs = BeautifulSoup(response.text,'html.parser')
         value = bs.find_all('td')
@@ -549,19 +549,19 @@ def hour(request):
             if n == 1:
                 break
             c.save()
-    
-    response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
-    bs = BeautifulSoup(response.text,'html.parser')
-    value = bs.find_all('td')
-    n=0
-    for i in range(int(len(value)/6)):
-        b = value[(-i-1)*6].get_text()
-        a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
-        n = Btc1M.objects.filter(date=a).count()
-        if n == 1:
-            break
-        c=Btc1M(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
-        c.save()
+    if k == 1:
+        response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
+        bs = BeautifulSoup(response.text,'html.parser')
+        value = bs.find_all('td')
+        n=0
+        for i in range(int(len(value)/6)):
+            b = value[(-i-1)*6].get_text()
+            a = datetime.datetime.strptime(b,"%Y-%m-%d %H:%M:%S")
+            n = Btc1M.objects.filter(date=a).count()
+            if n == 1:
+                break
+            c=Btc1M(date=a,start=int(value[(-i-1)*6+1].get_text()),high=int(value[(-i-1)*6+2].get_text()),low=int(value[(-i-1)*6+3].get_text()),end=int(value[(-i-1)*6+4].get_text()),volume=float(value[(-i-1)*6+5].get_text()))
+            c.save()
     if k == 1:
         response = requests.get('http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=300&after=1633072680')
         bs = BeautifulSoup(response.text,'html.parser')
