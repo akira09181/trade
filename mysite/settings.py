@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '%i8)7d5n#bv(rtxy#nw_18$tv7^8d_akieug)q$ro-zz#2d8@o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -80,13 +82,41 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-if "DESKTOP-8TQSRDM" in hostname:
+
+if os.getenv('GAE_APPLICATION', None):
+       # GAE本番環境
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
+           'USER': 'iwa',
+           'PASSWORD': '0918',
+           'NAME': 'btcjpy',
+       }
+   }
+elif "DESKTOP-8TQSRDM" in hostname:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
+           'USER': 'iwa',
+           'PASSWORD': '0918',
+           'NAME': 'btcjpy',
+       }
+   }
+elif "docker" in hostname:
     DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432
     }
+}
+
+    
 else:
     import dj_database_url
     db_from_env = dj_database_url.config()
@@ -136,5 +166,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-import django_heroku
-django_heroku.settings(locals())
+#import django_heroku
+#django_heroku.settings(locals())
+if DEBUG:
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK" : lambda request: True,
+    }

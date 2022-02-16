@@ -28,7 +28,7 @@ def index(request):
         c = Input(date=li[5][:10],start=int(li[4]),high=int(li[3]),low=int(li[2]),end=int(li[1]),volume=float(li[0]))
         
         c.save()
-    d = Input.objects.all().values().order_by('date')  
+    d = Input.objects.all().values().order_by('date')
     
         
     
