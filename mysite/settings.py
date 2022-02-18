@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from socket import gethostname
-hostname=gethostname()
+hostname = gethostname()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,6 @@ SECRET_KEY = '%i8)7d5n#bv(rtxy#nw_18$tv7^8d_akieug)q$ro-zz#2d8@o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 
 ALLOWED_HOSTS = ["*"]
@@ -84,44 +83,44 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 if os.getenv('GAE_APPLICATION', None):
-       # GAE本番環境
+    # GAE本番環境
     DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
-           'USER': 'iwa',
-           'PASSWORD': '0918',
-           'NAME': 'btcjpy',
-       }
-   }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
+            'USER': 'iwa',
+            'PASSWORD': '0918',
+            'NAME': 'btcjpy',
+        }
+    }
 elif "DESKTOP-8TQSRDM" in hostname:
     DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
-           'USER': 'iwa',
-           'PASSWORD': '0918',
-           'NAME': 'btcjpy',
-       }
-   }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
+            'USER': 'iwa',
+            'PASSWORD': '0918',
+            'NAME': 'btcjpy',
+        }
+    }
 elif "docker" in hostname:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'db',
+            'PORT': 5432
+        }
     }
-}
 
-    
+
 else:
     import dj_database_url
     db_from_env = dj_database_url.config()
     DATABASES = {
-        'default':dj_database_url.config()
+        'default': dj_database_url.config()
     }
 
 
@@ -160,15 +159,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 追記
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # 追記
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 #import django_heroku
-#django_heroku.settings(locals())
+# django_heroku.settings(locals())
 if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK" : lambda request: True,
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
     }
