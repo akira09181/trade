@@ -4,17 +4,29 @@
 
 {% endblock header %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="stylesheet\header.scss">
+  <header>
+    <div class = "sub_header">
+  <a href = "#sma">単純移動平均線</a>
+  <a href = "#bband">ボリンジャーバンド</a>
+  <a href = "#macd">MACD</a>
+  <a href = "#rsi">RSI</a>
+  <a href = "#fib">フィボナッチリトレースメント</a>
+  <a href = "#stochastic">ストキャティクス</a>
+  <a href = "#past_data">過去のデータ</a>
+    </div>
+</header>
 bitcoinの投資に興味があり、インジケータの使い方を考えたくてシミュレーションプログラムを作りました。
 投資額を決めてスタートして、インジケータのサインで売り買いするプログラムを回した時に、利益はどうなるのか？
 ただ持っているだけよりも多くの利益が出るのか検証したいと思います。
 ※日足のトレードで、０時時点の相場でトレードするものとします。
-<h2>・<a href = "https://www.jibunbank.co.jp/products/foreign_deposit/chart/help/sma/">単純移動平均線</a></h2></br>
+<h2>・<a id="sma" href = "https://www.jibunbank.co.jp/products/foreign_deposit/chart/help/sma/">単純移動平均線</a></h2></br>
 ここでは、ゴールデンクロスが起きたら買って、デットクロスが起きた時に売ることとします。
 <form action="/mytrade/sma">
 {% bootstrap_form SmaForm layout='horizontal' %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
-<h2>・<a href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a></h2></br>
+<h2>・<a id="bband" href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a></h2></br>
 SMA（単純移動平均線）をとり、それを基準に偏差を計算します。逆張りと順張りで検証します。
 逆張りは-2σで買い、+2σで売りとします。
 順張りは、ボラティリティ・ブレイクアウトがおきたら買い、売りとします。
@@ -28,7 +40,7 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 {% bootstrap_form BreForm layout='horizontal' %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
-<h2>・<a href = "https://moneyworld.jp/news/05_00053723_news">MACD</a></h2></br>
+<h2>・<a id="macd" href = "https://moneyworld.jp/news/05_00053723_news">MACD</a></h2></br>
 ゴールデンクロスで買い、デットクロスで売ります。
 <form action = "/mytrade/macd">
 {% bootstrap_form SmaForm layout='horizontal' %}
@@ -40,19 +52,19 @@ SMA（単純移動平均線）をとり、それを基準に偏差を計算し�
 {% bootstrap_form BreForm layout='horizontal' %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
-<h2>・<a href = "https://www.fxtrade-lab.com/10559">フィボナッチリトレースメント</a></h2>
+<h2>・<a id="fib" href = "https://www.fxtrade-lab.com/10559">フィボナッチリトレースメント</a></h2>
 <form action ="/mytrade/fib">
 {% bootstrap_form BreForm layout="horizontal" %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
-<h2>・<a href = "https://www.moneypartners.co.jp/support/tech/sct.html">ストキャスティクス</a></h2>
+<h2>・<a id ="stochastic" href = "https://www.moneypartners.co.jp/support/tech/sct.html">ストキャスティクス</a></h2>
 <form action = "/mytrade/st">
 {% bootstrap_form BreForm layout="horizontal" %}
 <button type="submit" class = 'btn btn-outline-primary'>Simulation</button>
 </form>
 
 ↓対象の過去データ
-<table border="2">
+<table id="past_data" border="2">
 <tr>
 <th>日時</th>
 <th>始値</th>
