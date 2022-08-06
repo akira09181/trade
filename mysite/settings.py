@@ -97,7 +97,6 @@ elif "DESKTOP-8TQSRDM" in hostname:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/iwabtcjpy:asia-northeast1:btcjpy',
             'USER': 'iwa',
             'PASSWORD': '0918',
             'NAME': 'btcjpy',
