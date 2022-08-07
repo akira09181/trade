@@ -1,21 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 {% block header %}
 
 {% endblock header %}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="mytrade\templates\stylesheet\header.scss">
-  <header>
-    <div class = "sub_header">
-  <a href = "#sma">単純移動平均線</a>
-  <a href = "#bband">ボリンジャーバンド</a>
-  <a href = "#macd">MACD</a>
-  <a href = "#rsi">RSI</a>
-  <a href = "#fib">フィボナッチリトレースメント</a>
-  <a href = "#stochastic">ストキャティクス</a>
-  <a href = "#past_data">過去のデータ</a>
-    </div>
-</header>
 bitcoinの投資に興味があり、インジケータの使い方を考えたくてシミュレーションプログラムを作りました。
 投資額を決めてスタートして、インジケータのサインで売り買いするプログラムを回した時に、利益はどうなるのか？
 ただ持っているだけよりも多くの利益が出るのか検証したいと思います。

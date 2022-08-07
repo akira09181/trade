@@ -1,0 +1,24 @@
+.sub_header {
+  display: flex;
+  background: rgba(120, 254, 224, 1);
+  height: 60px;
+  text-align: center;
+  padding: 20px;
+  margin-top: -40px;
+}
+@media only screen and (max-width: 800px) {
+  .sub_header {
+    display: none;
+  }
+}
+a {
+  margin-left: 10px;
+}
+.mb-3,
+.my-3 {
+  margin-bottom: none;
+  margin-top: none;
+}
+.navbar {
+  top: -20px;
+}
