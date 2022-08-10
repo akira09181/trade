@@ -1,10 +1,11 @@
 .sub_header {
-  display: flex;
+  display: fixed;
   background: rgba(120, 254, 224, 1);
   height: 60px;
   text-align: center;
   padding: 20px;
   margin-top: -40px;
+  width: 100%;
 }
 @media only screen and (max-width: 800px) {
   .sub_header {
@@ -21,4 +22,5 @@ a {
 }
 .navbar {
   top: -20px;
+  display: fixed;
 }

@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
 {% block header %}
-
+<header>
+    <div class = "sub_header">
+    <a href = "#sma">単純移動平均線</a>
+    <a href = "#bband">ボリンジャーバンド</a>
+    <a href = "#macd">MACD</a>
+    <a href = "#rsi">RSI</a>
+    <a href = "#fib">フィボナッチリトレースメント</a>
+    <a href = "#stochastic">ストキャティクス</a>
+    <a href = "#past_data">過去のデータ</a>
+    </div>
+</header>
 {% endblock header %}
 {% block content %}
 bitcoinの投資に興味があり、インジケータの使い方を考えたくてシミュレーションプログラムを作りました。
@@ -15,9 +26,7 @@ bitcoinの投資に興味があり、インジケータの使い方を考えた�
 {% bootstrap_form SmaForm layout='horizontal' %}
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
-<h2>・<a id="bband" href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a></h2></br>
-SMA（単純移動平均線）をとり、それを基準に偏差を計算します。逆張りと順張りで検証します。
-逆張りは-2σで買い、+2σで売りとします。
+<h2>・<a id="bband" href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a><br/></h2>
 順張りは、ボラティリティ・ブレイクアウトがおきたら買い、売りとします。
 <h3>・逆張り</h3>
 <form action="/mytrade/breverse">
