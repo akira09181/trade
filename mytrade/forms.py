@@ -1,5 +1,6 @@
 from django import forms
 from .models import Sma, Bre
+import datetime
 
 
 class SmaForm(forms.ModelForm):
@@ -10,7 +11,14 @@ class SmaForm(forms.ModelForm):
 
     class Meta:
         model = Sma
-        fields = ('short', 'long', 'val', 'sjpy')
+        fields = ('__all__')
+        datetime = datetime.datetime.now()
+        date = datetime.date()
+        year = date.strftime('%Y')
+        widgets = {
+            'term_from': forms.SelectDateWidget(years=[x for x in range(2016, int(year))]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(2016, int(year))]),
+        }
 
 
 class BreForm(forms.ModelForm):
@@ -23,3 +31,10 @@ class BreForm(forms.ModelForm):
         model = Bre
 
         fields = ('day', 'val', 'sjpy')
+        datetime = datetime.datetime.now()
+        date = datetime.date()
+        year = date.strftime('%Y')
+        widgets = {
+            'term_from': forms.SelectDateWidget(years=[x for x in range(2016, int(year))]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(2016, int(year))]),
+        }

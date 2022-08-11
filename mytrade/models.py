@@ -41,6 +41,8 @@ class Sma(models.Model):
     long = models.IntegerField(default=14, verbose_name="長い移動平均線")
     val = models.IntegerField(default=30, verbose_name="取引量（％）")
     sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
+    term_from = models.DateField()
+    term_to = models.DateField()
 
 
 class Bre(models.Model):
