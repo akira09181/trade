@@ -30,7 +30,7 @@ class BreForm(forms.ModelForm):
     class Meta:
         model = Bre
 
-        fields = ('day', 'val', 'sjpy')
+        fields = ('__all__')
         datetime = datetime.datetime.now()
         date = datetime.date()
         year = date.strftime('%Y')
