@@ -20,6 +20,13 @@ class SmaForm(forms.ModelForm):
             'term_to': forms.SelectDateWidget(years=[x for x in range(2016, int(year))]),
         }
 
+    def clean_term_from(self):
+        term_from_year = self.cleaned_data.get('term_from_year')
+        term_from_month = self.cleaned_data.get('term_from_month')
+        if term_from_year == 2015 and term_from_month < 7:
+            raise forms.ValidationError('2015年7月以降を選択してください。')
+        return term_from_year
+
 
 class BreForm(forms.ModelForm):
     choice = forms.fields.ChoiceField(choices=(
