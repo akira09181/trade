@@ -686,7 +686,10 @@ def hour(request):
             c = InputHour(date=a, start=int(value[(-i-1)*6+1].get_text()), high=int(value[(-i-1)*6+2].get_text()), low=int(
                 value[(-i-1)*6+3].get_text()), end=int(value[(-i-1)*6+4].get_text()), volume=float(value[(-i-1)*6+5].get_text()))
             n = InputHour.objects.filter(date=a).count()
-            c.save()
+            if n == 1:
+                pass
+            else:
+                c.save()
     if k == 1:
         response = requests.get(
             'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
