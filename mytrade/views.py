@@ -672,6 +672,7 @@ def st(request):
 
 
 def hour(request):
+    # HEROKUの無料分を越えてしまうため、短いローソク足はカットしている。
     k = 0
     if k == 0:
         response = requests.get(
@@ -685,8 +686,6 @@ def hour(request):
             c = InputHour(date=a, start=int(value[(-i-1)*6+1].get_text()), high=int(value[(-i-1)*6+2].get_text()), low=int(
                 value[(-i-1)*6+3].get_text()), end=int(value[(-i-1)*6+4].get_text()), volume=float(value[(-i-1)*6+5].get_text()))
             n = InputHour.objects.filter(date=a).count()
-            if n == 1:
-                break
             c.save()
     if k == 1:
         response = requests.get(
