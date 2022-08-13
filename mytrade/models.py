@@ -48,7 +48,7 @@ class Sma(models.Model):
 class Bre(models.Model):
     day = models.IntegerField(default=20, verbose_name="移動平均線（足）")
     val = models.IntegerField(default=30, verbose_name="取引量（％）")
-    sjpy = models.IntegerField(default=10, verbose_name="初期の投資額")
+    sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
     term_from = models.DateField()
     term_to = models.DateField()
 
