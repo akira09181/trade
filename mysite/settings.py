@@ -29,7 +29,7 @@ SECRET_KEY = '%i8)7d5n#bv(rtxy#nw_18$tv7^8d_akieug)q$ro-zz#2d8@o'
 if "DESKTOP-8TQSRDM" in hostname:
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 
 ALLOWED_HOSTS = ["*"]
