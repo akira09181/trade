@@ -4,7 +4,7 @@ header {
 
 .sub_header {
   display: fixed;
-  background: rgba(120, 254, 224, 1);
+  background: rgb(0 123 255 / 25%);
   height: 60px;
   text-align: center;
   padding: 20px;

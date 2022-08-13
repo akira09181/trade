@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block header %}
+{% endblock header %}
+{% block content %}
 <h1>結果は日本円：{{ resultjpy }}円</br>ビットコイン：{{resultcoin}}</br>合計{{resultend}}円相当、元手から{{bai}}倍です</h1>
 </br>
 <h2>買った回数：{{countbuy}}</br>
 売った回数：{{countsell }} </h2>
-{% endblock header %}
-{% block content %}
 <table border = "2">
 <th>日時</th>
 <th>日本円</th>
