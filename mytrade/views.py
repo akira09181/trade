@@ -125,8 +125,25 @@ def sma(request):
 
 def breverse(request):
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
@@ -140,7 +157,6 @@ def breverse(request):
     bs = BeautifulSoup(response.text, "html.parser")
     value = bs.find_all("td")
     lists = []
-    num = int(len(value)/6)
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
@@ -195,8 +211,25 @@ def breverse(request):
 
 def bbreak(request):
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
@@ -210,7 +243,6 @@ def bbreak(request):
     bs = BeautifulSoup(response.text, "html.parser")
     value = bs.find_all("td")
     lists = []
-    num = int(len(value)/6)
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
@@ -268,8 +300,25 @@ def bbreak(request):
 
 def macd(request):
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
@@ -283,7 +332,6 @@ def macd(request):
     bs = BeautifulSoup(response.text, "html.parser")
     value = bs.find_all("td")
     lists = []
-    num = int(len(value)/6)
     for i in range(int(len(value)/6)):
         li = []
         for j in range(6):
@@ -298,8 +346,6 @@ def macd(request):
     trandflag = 0
     avl = 0
     avs = 0
-    sellf = 0
-    buyf = 0
     sjpy = int(request.GET['sjpy'])
     jpy = sjpy
     bitcoin = 0
@@ -347,8 +393,25 @@ def results(request):
 
 def rsi(request):
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
@@ -362,7 +425,6 @@ def rsi(request):
     sjpy = int(request.GET['sjpy'])
     jpy = sjpy
     coin = 0
-    ave = 0
     plus = 0
     minus = 0
     rsi = 0
@@ -410,8 +472,25 @@ def fib(request):
     sjpy = int(request.GET['sjpy'])
     jpy = sjpy
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
@@ -507,8 +586,25 @@ def st(request):
     sjpy = int(request.GET['sjpy'])
     jpy = sjpy
     ch = request.GET['choice']
+    term_from_year = request.GET['term_from_year']
+    term_from_month = request.GET['term_from_month']
+    term_from_day = request.GET['term_from_day']
+    term_to_year = request.GET['term_to_year']
+    term_to_month = request.GET['term_to_month']
+    term_to_day = request.GET['term_to_day']
+    if int(term_from_month) < 10:
+        term_from_month = '0'+term_from_month
+    if int(term_from_day) < 10:
+        term_from_day = '0'+term_from_day
+    if int(term_to_month) < 10:
+        term_to_month = '0'+term_to_month
+    if int(term_to_day) < 10:
+        term_to_day = '0'+term_to_day
+    term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
+    term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
     if ch == 'BTC1D':
-        c = Input.objects.all().values().order_by('date')
+        c = Input.objects.filter(
+            date__gte=term_from, date__lte=term_to).values().order_by('date')
     elif ch == 'BTC1H':
         c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
