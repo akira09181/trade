@@ -17,8 +17,8 @@ class SmaForm(forms.ModelForm):
         date = datetime.date()
         year = date.strftime('%Y')
         widgets = {
-            'term_from': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year, int(year)+1)]),
-            'term_to': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year, int(year)+1)]),
+            'term_from': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year+1, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year+1, int(year)+1)]),
         }
 
     def clean_term_from(self):
@@ -30,6 +30,7 @@ class SmaForm(forms.ModelForm):
 
 
 class BreForm(forms.ModelForm):
+
     choice = forms.fields.ChoiceField(choices=(
         ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H',
                                                     'BTC1時間足'), ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足')
@@ -37,12 +38,13 @@ class BreForm(forms.ModelForm):
 
     class Meta:
         model = Bre
+        year_from = Input.objects.all().values().order_by('date')
 
         fields = ('__all__')
         datetime = datetime.datetime.now()
         date = datetime.date()
         year = date.strftime('%Y')
         widgets = {
-            'term_from': forms.SelectDateWidget(years=[x for x in range(2016, int(year)+1)]),
-            'term_to': forms.SelectDateWidget(years=[x for x in range(2016, int(year)+1)]),
+            'term_from': forms.SelectDateWidget(years=[x for x in range(int(year_from[0]['date'].year)+1, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(int(year_from[0]['date'].year)+1, int(year)+1)]),
         }
