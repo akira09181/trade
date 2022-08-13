@@ -18,7 +18,7 @@ class SmaForm(forms.ModelForm):
         year = date.strftime('%Y')
         widgets = {
             'term_from': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year, int(year)+1)]),
-            'term_to': forms.SelectDateWidget(years=[x for x in range(2016, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(year_from[0]['date'].year, int(year)+1)]),
         }
 
     def clean_term_from(self):
