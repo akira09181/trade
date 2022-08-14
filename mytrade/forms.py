@@ -4,7 +4,8 @@ import datetime
 
 
 class SmaForm(forms.ModelForm):
-    choice = forms.fields.ChoiceField(choices=(
+
+    candlestick = forms.fields.ChoiceField(choices=(
         ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H',
                                                     'BTC1時間足'), ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足')
     ), required=False)
@@ -39,7 +40,6 @@ class BreForm(forms.ModelForm):
     class Meta:
         model = Bre
         year_from = Input.objects.all().values().order_by('date')
-
         fields = ('__all__')
         datetime = datetime.datetime.now()
         date = datetime.date()
