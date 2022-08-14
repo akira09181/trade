@@ -27,7 +27,7 @@ SECRET_KEY = '%i8)7d5n#bv(rtxy#nw_18$tv7^8d_akieug)q$ro-zz#2d8@o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if "DESKTOP-8TQSRDM" in hostname:
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = True
 
