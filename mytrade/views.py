@@ -185,14 +185,65 @@ def breverse(request):
     if ch == 'BTC1D':
         c = Input.objects.filter(
             date__gte=term_from, date__lte=term_to).values().order_by('date')
+        lists = []
+        for i in range(len(c)):
+            li = [datetime.date(2020, 1, 1), 0, 0, 0, 0, 0]
+            li[0] = c[i]['date']
+            li[1] = c[i]['start']
+            li[2] = c[i]['high']
+            li[3] = c[i]['low']
+            li[4] = c[i]['end']
+            li[5] = c[i]['volume']
+            lists.append(li)
+        print(c[0])
     elif ch == 'BTC1H':
-        c = InputHour.objects.all().values().order_by('date')
+        response = requests.get(
+            'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=3600&after=1633072680')
+        bs = BeautifulSoup(response.text, 'html.parser')
+        value = bs.find_all('td')
+        lists = []
+        for i in range(int(len(value)/6)):
+            li = []
+            for j in range(6):
+                li.append(value[i*6+j].get_text())
+            lists.append(li)
+        #c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
-        c = Btc4H.objects.all().values().order_by('date')
+        response = requests.get(
+            'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=14400&after=1593587880')
+        bs = BeautifulSoup(response.text, 'html.parser')
+        value = bs.find_all('td')
+        lists = []
+        for i in range(int(len(value)/6)):
+            li = []
+            for j in range(6):
+                li.append(value[i*6+j].get_text())
+            lists.append(li)
+        #c = Btc4H.objects.all().values().order_by('date')
     elif ch == 'BTC5M':
-        c = Btc5M.objects.all().values().order_by('date')
+        response = requests.get(
+            'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=300&after=1633072680')
+        bs = BeautifulSoup(response.text, 'html.parser')
+        value = bs.find_all('td')
+        lists = []
+        for i in range(int(len(value)/6)):
+            li = []
+            for j in range(6):
+                li.append(value[i*6+j].get_text())
+            lists.append(li)
+        #c = Btc5M.objects.all().values().order_by('date')
     elif ch == 'BTC1M':
-        c = Btc1M.objects.all().values().order_by('date')
+        response = requests.get(
+            'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
+        bs = BeautifulSoup(response.text, 'html.parser')
+        value = bs.find_all('td')
+        lists = []
+        for i in range(int(len(value)/6)):
+            li = []
+            for j in range(6):
+                li.append(value[i*6+j].get_text())
+            lists.append(li)
+        #c = Btc1M.objects.all().values().order_by('date')
     response = requests.get(
         'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
     bs = BeautifulSoup(response.text, "html.parser")
@@ -217,32 +268,32 @@ def breverse(request):
     buycoin = 0
     buyjpy = 0
 
-    result = [["", 0, 0]for i in range(len(c))]
-    for i in range(len(c)):
+    result = [["", 0, 0]for i in range(len(lists))]
+    for i in range(len(lists)):
         if i > da:
             ave = 0
             for j in range(da):
-                ave += int(c[i-j]['start'])
+                ave += int(lists[i-j][1])
             ave /= da
             dtb = 0
             for j in range(da):
-                dtb += (int(c[i-j]['start'])-ave)**2
+                dtb += (int(lists[i-j][1])-ave)**2
             dtb /= da
 
             dtb = math.sqrt(dtb)
 
-            if int(c[i]['low']) < ave-dtb*2 and c[i]['start'] != 0:
+            if int(lists[i][3]) < ave-dtb*2 and lists[i][1] != 0:
                 buycoin = jpy*va
                 jpy -= buycoin
                 bitcoin += buycoin/(ave-dtb*2)
-            elif int(c[i]['high']) > ave+dtb*2 and c[i]['start'] != 0:
+            elif int(lists[i][2]) > ave+dtb*2 and lists[i][1] != 0:
                 buyjpy = bitcoin*va
                 bitcoin -= buyjpy
                 jpy += buyjpy*(ave+dtb*2)
-        result[i][0] = c[i]['date']
+        result[i][0] = lists[i][0]
         result[i][1] = jpy
         result[i][2] = bitcoin
-    resultend = int(bitcoin*int(c[len(c)-1]['start'])+jpy)
+    resultend = int(bitcoin*int(lists[len(c)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
     context = {"resultend": resultend, "result": result,
