@@ -1,6 +1,10 @@
+from ..models import Input
+import datetime
+import requests
+from bs4 import BeautifulSoup
 
 
-class sma(request):
+def data_get(request):
     ch = request.GET['candlestick']
     term_from_year = request.GET['term_from_year']
     term_from_month = request.GET['term_from_month']
@@ -31,7 +35,6 @@ class sma(request):
             li[4] = c[i]['end']
             li[5] = c[i]['volume']
             lists.append(li)
-        print(c[0])
     elif ch == 'BTC1H':
         response = requests.get(
             'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=3600&after=1633072680')
@@ -43,7 +46,7 @@ class sma(request):
             for j in range(6):
                 li.append(value[i*6+j].get_text())
             lists.append(li)
-        #c = InputHour.objects.all().values().order_by('date')
+            # c = InputHour.objects.all().values().order_by('date')
     elif ch == 'BTC4H':
         response = requests.get(
             'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=14400&after=1593587880')
@@ -55,7 +58,7 @@ class sma(request):
             for j in range(6):
                 li.append(value[i*6+j].get_text())
             lists.append(li)
-        #c = Btc4H.objects.all().values().order_by('date')
+        # c = Btc4H.objects.all().values().order_by('date')
     elif ch == 'BTC5M':
         response = requests.get(
             'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=300&after=1633072680')
@@ -67,7 +70,7 @@ class sma(request):
             for j in range(6):
                 li.append(value[i*6+j].get_text())
             lists.append(li)
-        #c = Btc5M.objects.all().values().order_by('date')
+        # c = Btc5M.objects.all().values().order_by('date')
     elif ch == 'BTC1M':
         response = requests.get(
             'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=60&after=1633072680')
