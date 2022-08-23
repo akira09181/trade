@@ -5,7 +5,6 @@ from django.utils import timezone
 from django.urls import reverse
 
 from .models import Input
-import views
 
 
 class InputModelTests(TestCase):
