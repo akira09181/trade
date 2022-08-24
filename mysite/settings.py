@@ -169,7 +169,7 @@ STATICFILES_DIRS = (
 )
 #import django_heroku
 # django_heroku.settings(locals())
-if DEBUG:
-    DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-    }
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+}
