@@ -34,6 +34,7 @@ def index(request):
 
         c.save()
     d = Input.objects.all().values().order_by('date')
+    print(c)
 
     context = {"value": d, "num": num, "BreForm": BreForm, "SmaForm": SmaForm}
     return render(request, "mytrade/index.html", context)
