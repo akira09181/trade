@@ -511,7 +511,7 @@ def inquiry(request):
     send_mail(subject, message, from_email, recipient_list)
     subject = '問い合わせあり'
     recipient_list = ['freelance0918@gmail.com']
-    send_mail(subject, inq, from_email, recipient_list)
+    send_mail(subject, email+inq, from_email, recipient_list)
     context = {'SmaForm': SmaForm, 'BreForm': BreForm}
     return render(request, 'mytrade/index.html', context)
 
