@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 import requests
 import datetime
@@ -7,7 +9,7 @@ from bs4 import BeautifulSoup
 import math
 
 from .models import Input, InputHour, Btc1M, Btc4H, Btc5M
-from .forms import SmaForm, BreForm
+from .forms import SmaForm, BreForm, Inquiry
 from .indicator.initial_processing import data_get
 
 
@@ -496,3 +498,24 @@ def hour(request):
     d = Btc1M.objects.all().values().order_by('date')
     context = {'value': d, 'BreForm': BreForm, "SmaForm": SmaForm}
     return render(request, 'mytrade/index.html', context)
+
+
+def inquiry(request):
+    name = request.GET['name']
+    email = request.GET['email']
+    inq = request.GET['message']
+    subject = 'thank you for your inquiry'
+    message = name+'様'+render_to_string('inquiry/message.txt')
+    from_email = 'for.send.mail.use.iwa@gmail.com'
+    recipient_list = [email]
+    send_mail(subject, message, from_email, recipient_list)
+    subject = '問い合わせあり'
+    recipient_list = ['freelance0918@gmail.com']
+    send_mail(subject, inq, from_email, recipient_list)
+    context = {'SmaForm': SmaForm, 'BreForm': BreForm}
+    return render(request, 'mytrade/index.html', context)
+
+
+def pre_inquiry(request):
+    context = {'Inquiry': Inquiry}
+    return render(request, 'mytrade/inquiry.html', context)

@@ -12,4 +12,6 @@ urlpatterns = [
     path('fib', views.fib, name="fib"),
     path('st', views.st, name='st'),
     path('hour', views.hour, name='hour'),
+    path('inquiry', views.inquiry, name='inquiry'),
+    path('pre_inquiry', views.pre_inquiry, name='pre_inquiry'),
 ]

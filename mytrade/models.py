@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 import datetime
 from django.utils import timezone
 # Create your models here.
@@ -78,3 +77,9 @@ class Btc4H(models.Model):
     low = models.IntegerField()
     end = models.IntegerField()
     volume = models.FloatField()
+
+
+class Inquiry(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.CharField(max_length=1000, null=True)

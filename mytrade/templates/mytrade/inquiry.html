@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block header %}
+
+{% endblock header %} {% block content %}
+<h1>お問い合わせ</h1>
+<form action="/mytrade/inquiry">
+  {% bootstrap_form Inquiry layout='horizontal' %}
+  <button type="submit" class="btn btn-outline-primary">送信</button>
+  {% endblock content %}
+</form>
