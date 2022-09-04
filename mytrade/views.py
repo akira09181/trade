@@ -8,8 +8,8 @@ import datetime
 from bs4 import BeautifulSoup
 import math
 
-from .models import Input, InputHour, Btc1M, Btc4H, Btc5M
-from .forms import SmaForm, BreForm, Inquiry
+from .models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users
+from .forms import SmaForm, BreForm, Inquiry, Register
 from .indicator.initial_processing import data_get
 
 
@@ -519,3 +519,20 @@ def inquiry(request):
 def pre_inquiry(request):
     context = {'Inquiry': Inquiry}
     return render(request, 'mytrade/inquiry.html', context)
+
+
+def pre_register(request):
+    context = {'register': Register}
+    return render(request, 'mytrade/register.html', context)
+
+
+def register(request):
+    name = request.GET['name']
+    password = request.GET['password']
+    adress = request.GET['adress']
+    tell = request.GET['tell']
+    register_date = datetime.datetime.now()
+    regist = Users(name, password, adress, tell, register_date, '2022-09-04')
+    regist.save()
+    context = {'SmaForm': SmaForm, 'BreForm': BreForm}
+    return render(request, 'mytrade/index.html', context)

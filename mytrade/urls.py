@@ -14,4 +14,6 @@ urlpatterns = [
     path('hour', views.hour, name='hour'),
     path('inquiry', views.inquiry, name='inquiry'),
     path('pre_inquiry', views.pre_inquiry, name='pre_inquiry'),
+    path('register', views.register, name='register'),
+    path('pre_register', views.pre_register, name='pre_register'),
 ]

@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block header %}
+{% endblock header %} {% block content %}
+<h1>ユーザー登録</h1>
+<form action="/mytrade/register">
+  {% bootstrap_form register layout='horizontal' %}
+  <button type="submit" class="btn btn-outline-primary">送信</button>
+  {% endblock content %}
+</form>

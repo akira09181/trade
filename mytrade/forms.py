@@ -1,5 +1,5 @@
 from django import forms
-from .models import Sma, Bre, Input, Inquiry
+from .models import Sma, Bre, Input, Inquiry, Users
 import datetime
 
 
@@ -54,4 +54,10 @@ class BreForm(forms.ModelForm):
 class Inquiry(forms.ModelForm):
     class Meta:
         model = Inquiry
+        fields = ('__all__')
+
+
+class Register(forms.ModelForm):
+    class Meta:
+        model = Users
         fields = ('__all__')

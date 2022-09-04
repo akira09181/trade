@@ -10,7 +10,7 @@ class Users(models.Model):
     adress = models.CharField(max_length=200)
     tell = models.CharField(max_length=20)
     register_date = models.DateTimeField('date published')
-    last_in_date = models.DateTimeField('date published')
+    last_in_date = models.DateTimeField('date published', null=True)
 
 
 class Input(models.Model):
