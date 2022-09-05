@@ -60,4 +60,10 @@ class Inquiry(forms.ModelForm):
 class Register(forms.ModelForm):
     class Meta:
         model = Users
-        fields = ('__all__')
+        fields = ('name', 'password', 'adress', 'tell')
+
+
+class Login(forms.ModelForm):
+    class Meta:
+        model = Users
+        fields = ('name', 'password')

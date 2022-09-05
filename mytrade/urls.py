@@ -16,4 +16,6 @@ urlpatterns = [
     path('pre_inquiry', views.pre_inquiry, name='pre_inquiry'),
     path('register', views.register, name='register'),
     path('pre_register', views.pre_register, name='pre_register'),
+    path('login', views.login, name='login'),
+    path('pre_login', views.pre_login, name='pre_login'),
 ]

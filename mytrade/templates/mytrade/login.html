@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% load bootstrap4 %} {% block header %}
+{% endblock header %} {% block content %}
+<h1>ログイン</h1>
+<form action="/mytrade/login">
+  {% bootstrap_form Login layout='horizontal' %}
+  <button type="submit" class="btn btn-outline-primary">送信</button>
+  {% endblock content %}
+</form>

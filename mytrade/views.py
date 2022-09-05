@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 import math
 
 from .models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users
-from .forms import SmaForm, BreForm, Inquiry, Register
+from .forms import SmaForm, BreForm, Inquiry, Register, Login
 from .indicator.initial_processing import data_get
 
 
@@ -536,3 +536,19 @@ def register(request):
     regist.save()
     context = {'SmaForm': SmaForm, 'BreForm': BreForm}
     return render(request, 'mytrade/index.html', context)
+
+
+def pre_login(request):
+    context = {'Login': Login}
+    return render(request, 'mytrade/login.html', context)
+
+
+def login(request):
+    name = request.GET['name']
+    password = request.GET['password']
+    login_ok = Users.objects.filter(name=name, password=password)
+    context = {'SmaForm': SmaForm, 'BreForm': BreForm}
+    if login_ok:
+        return render(request, 'mytrade/index.html', context)
+    else:
+        return render(request, 'mytrade/index.html', context)
