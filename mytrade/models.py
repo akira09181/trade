@@ -83,3 +83,13 @@ class Inquiry(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.CharField(max_length=1000, null=True)
+
+
+class Records(models.Model):
+    name = models.ForeignKey(
+        Users, on_delete=models.CASCADE, related_name='Rcords.name+')
+    indicator = models.CharField(max_length=100)
+    first_money = models.IntegerField()
+    from_date = models.DateTimeField()
+    to_date = models.DateTimeField()
+    result = models.IntegerField()

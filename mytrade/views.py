@@ -8,7 +8,7 @@ import datetime
 from bs4 import BeautifulSoup
 import math
 
-from .models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users
+from .models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users, Records
 from .forms import SmaForm, BreForm, Inquiry, Register, Login
 from .indicator.initial_processing import data_get
 
@@ -532,7 +532,8 @@ def register(request):
     adress = request.GET['adress']
     tell = request.GET['tell']
     register_date = datetime.datetime.now()
-    regist = Users(name, password, adress, tell, register_date, '2022-09-04')
+    regist = Users(name=name, password=password, adress=adress, tell=tell,
+                   register_date=register_date, last_in_date='2022-09-04')
     regist.save()
     context = {'SmaForm': SmaForm, 'BreForm': BreForm}
     return render(request, 'mytrade/index.html', context)
@@ -547,8 +548,11 @@ def login(request):
     name = request.GET['name']
     password = request.GET['password']
     login_ok = Users.objects.filter(name=name, password=password)
-    context = {'SmaForm': SmaForm, 'BreForm': BreForm}
+    records = Records.objects.filter(id=login_ok.get('id')).values()
+
     if login_ok:
-        return render(request, 'mytrade/index.html', context)
+        context = {'name': login_ok.get('id'), 'records': records}
+        return render(request, 'mytrade/my_page.html', context)
     else:
+        context = {'SmaForm': SmaForm, 'BreForm': BreForm}
         return render(request, 'mytrade/index.html', context)
