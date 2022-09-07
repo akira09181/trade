@@ -548,8 +548,8 @@ def login(request):
     name = request.GET['name']
     password = request.GET['password']
     login_ok = Users.objects.filter(name=name, password=password)
-    records = Records.objects.filter(id=login_ok.get('id')).values()
-
+    print(Records.objects.all().count(), '--------------------------')
+    records = Records.objects.get(name=login_ok.get('name'))
     if login_ok:
         context = {'name': login_ok.get('id'), 'records': records}
         return render(request, 'mytrade/my_page.html', context)
