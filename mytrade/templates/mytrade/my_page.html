@@ -1,8 +1,12 @@
-{% extends 'base.html' %} {% load bootstrap4 %} {% block header %} {% endblock
-header %} {% block content %}
-<h1>{%name%}さん、ようこそ</h1>
-<form action="/mytrade/login">
-  {% bootstrap_form Login layout='horizontal' %}
-  <button type="submit" class="btn btn-outline-primary">送信</button>
-</form>
-{% endblock content %}
+{% extends 'base.html' %} {% load bootstrap4 %} {% block header %}
+　　　　　　　 {% endblock header %} {% block content %}
+<h1>{{name}}さん、ようこそ</h1>
+<h2>履歴</h2>
+{%for i in records %}
+<tr>
+  <td>{{i.indicator}}</td>
+  <td>{{i.first_money}}</td>
+  <td>{{i.from_date}}</td>
+  <td>{{i.result}}</td>
+</tr>
+{% endfor %} {% endblock content %}

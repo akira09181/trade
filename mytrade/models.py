@@ -86,8 +86,7 @@ class Inquiry(models.Model):
 
 
 class Records(models.Model):
-    name = models.ForeignKey(
-        Users, on_delete=models.CASCADE, related_name='Rcords.name+')
+    name = models.CharField(max_length=255)
     indicator = models.CharField(max_length=100)
     first_money = models.IntegerField()
     from_date = models.DateTimeField()
