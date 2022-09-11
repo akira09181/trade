@@ -14,13 +14,19 @@
 </div>
 {% endblock header %}
 {% block content %}
+{% if login_ok %}
+<h1>{{name}}さん、ようこそ</h1>
+{% else %}
 個人投資家の９０％は負けていると言われていますが、なぜ負けるんでしょうか。なぜファンドは勝てるんでしょうか。
 その原因を考えたくてこのプログラムをつくりました。インジケーターで投資をした場合の期待値がどうなっていくのか。
 それを過去のデータから考えて行きたいです。
+{% endif %}
 <h2>・<a id="sma" href = "https://www.jibunbank.co.jp/products/foreign_deposit/chart/help/sma/">単純移動平均線</a></h2></br>
 ここでは、ゴールデンクロスが起きたら買って、デットクロスが起きた時に売ることとします。
 <form action="/mytrade/sma">
 {% bootstrap_form SmaForm layout='horizontal' %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a id="bband" href = "https://info.monex.co.jp/technical-analysis/indicators/003.html">ボリンジャーバンド</a><br/></h2>

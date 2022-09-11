@@ -15,6 +15,8 @@ from .indicator.initial_processing import data_get
 
 # Create your views here.
 def index(request):
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
 
     response = requests.get(
         'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
@@ -37,7 +39,8 @@ def index(request):
         c.save()
     d = Input.objects.all().values().order_by('date')
 
-    context = {"value": d, "num": num, "BreForm": BreForm, "SmaForm": SmaForm}
+    context = {"value": d, "num": num, "BreForm": BreForm,
+               "SmaForm": SmaForm, "login_ok": login_ok, 'name': name}
     return render(request, "mytrade/index.html", context)
 
 

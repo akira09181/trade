@@ -9,4 +9,12 @@
   <td>{{i.from_date}}</td>
   <td>{{i.result}}</td>
 </tr>
-{% endfor %} {% endblock content %}
+{% endfor %}
+<form action="/mytrade/">
+  <input type="hidden" name="login_ok" value="True" />
+  <input type="hidden" name="name" value="{{name}}" />
+  <button type="submit" class="btn btn-outline-primary">
+    シミュレーションへ
+  </button>
+</form>
+{% endblock content %}
