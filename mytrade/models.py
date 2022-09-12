@@ -92,3 +92,4 @@ class Records(models.Model):
     from_date = models.DateTimeField()
     to_date = models.DateTimeField()
     result = models.IntegerField()
+    times = models.FloatField(null=True)

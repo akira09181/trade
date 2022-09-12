@@ -5,6 +5,13 @@
 {% endblock header %}
 {% block content %}
 <h1>結果は日本円：{{ resultjpy }}円</br>ビットコイン：{{resultcoin}}</br>合計{{resultend}}円相当、元手から{{bai}}倍です</h1>
+<form action='/mytrade/'>
+    <input type='hidden' name = 'name' value={{name}}/>
+    <input type='hidden' name = 'login_ok' value={{login_ok}}/>
+    <button type='submit' class="btn btn-outline-primary">
+        トップへ戻る
+    </button>
+</form>
 <table border = "2">
 <th>日時</th>
 <th>日本円</th>

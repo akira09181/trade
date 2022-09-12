@@ -50,6 +50,8 @@ def sma(request):
     lo = int(request.GET["long"])
     va = int(request.GET["val"])/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     trandflag = 0
     avl = 0
@@ -84,8 +86,12 @@ def sma(request):
     resultend = int(bitcoin*int(lists[len(lists)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
+    if login_ok:
+        record = Records(name=name, indicator='SMA', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultend, times=bai)
+        record.save()
     context = {"result": result, "resultjpy": jpy,
-               "resultcoin": bitcoin, "resultend": resultend, "bai": bai}
+               "resultcoin": bitcoin, "resultend": resultend, "bai": bai, "name": name, "login_ok": login_ok}
     return render(request, "mytrade/sma.html", context)
 
 
