@@ -34,33 +34,45 @@
 <h3>・逆張り</h3>
 <form action="/mytrade/breverse">
 {% bootstrap_form BreForm layout='horizontal' %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h3>・順張り</h3>
 <form action="/mytrade/bbreak">
 {% bootstrap_form BreForm layout='horizontal' %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a id="macd" href = "https://moneyworld.jp/news/05_00053723_news">MACD</a></h2></br>
 ゴールデンクロスで買い、デットクロスで売ります。
 <form action = "/mytrade/macd">
 {% bootstrap_form SmaForm layout='horizontal' %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a id = "rsi" href = "https://kabu.com/investment/guide/technical/08.html">RSI</a></h2></br>
 70以上で売り、30以下で買いとします。
 <form action = "/mytrade/rsi">
 {% bootstrap_form BreForm layout='horizontal' %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a id="fib" href = "https://www.fxtrade-lab.com/10559">フィボナッチリトレースメント</a></h2>
 <form action ="/mytrade/fib">
 {% bootstrap_form BreForm layout="horizontal" %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class='btn btn-outline-primary'>Simulation</button>
 </form>
 <h2>・<a id ="stochastic" href = "https://www.moneypartners.co.jp/support/tech/sct.html">ストキャスティクス</a></h2>
 <form action = "/mytrade/st">
 {% bootstrap_form BreForm layout="horizontal" %}
+<input type='hidden' name="login_ok" value="{{login_ok}}">
+<input type='hidden' name="name" value="{{name}}">
 <button type="submit" class = 'btn btn-outline-primary'>Simulation</button>
 </form>
 

@@ -102,6 +102,8 @@ def breverse(request):
     da = int(day)
     va = int(val)/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     ave = 0
     dtb = 0
@@ -134,8 +136,12 @@ def breverse(request):
     resultend = int(bitcoin*int(lists[len(lists)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
+    if login_ok:
+        record = Records(name=name, indicator='Bollinger_Bands_Contrary', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultend, times=bai)
+        record.save()
     context = {"resultend": resultend, "result": result,
-               "resultjpy": jpy, "resultcoin": bitcoin, "bai": bai}
+               "resultjpy": jpy, "resultcoin": bitcoin, "bai": bai, "login_ok": login_ok, "name": name}
     return render(request, "mytrade/breverse.html", context)
 
 
@@ -144,6 +150,8 @@ def bbreak(request):
     da = int(request.GET["day"])
     va = int(request.GET["val"])/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     ave = 0
     dtb = 0
@@ -181,8 +189,12 @@ def bbreak(request):
     resultend = int(bitcoin*int(lists[len(lists)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
+    if login_ok:
+        record = Records(name=name, indicator='Bollinger_Bands_Break_Out', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultend, times=bai)
+        record.save()
     context = {"resultend": resultend, "result": result, "resultjpy": jpy, "resultcoin": bitcoin,
-               "bai": bai, "countbuy": countbuy, "countsell": countsell}
+               "bai": bai, "countbuy": countbuy, "countsell": countsell, "login_ok": login_ok, "name": name}
     return render(request, "mytrade/result.html", context)
 
 
@@ -191,6 +203,8 @@ def macd(request):
     short = request.GET["short"]
     long = request.GET["long"]
     val = request.GET["val"]
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     sh = int(short)
     lo = int(long)
     va = int(val)/100
@@ -233,8 +247,12 @@ def macd(request):
     resultend = int(bitcoin*int(lists[len(lists)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
+    if login_ok:
+        record = Records(name=name, indicator='MACD', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultend, times=bai)
+        record.save()
     context = {"result": result, "resultjpy": jpy,
-               "resultcoin": bitcoin, "resultend": resultend, "bai": bai}
+               "resultcoin": bitcoin, "resultend": resultend, "bai": bai, "login_ok": login_ok, "name": name}
     return render(request, "mytrade/result.html", context)
 
 
@@ -247,6 +265,8 @@ def rsi(request):
     day = int(request.GET['day'])
     val = int(request.GET['val'])/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     coin = 0
     plus = 0
@@ -285,8 +305,12 @@ def rsi(request):
         result[i][2] = coin
     end = int(jpy+coin*(lists[len(lists)-1][1]))
     bai = end/sjpy
+    if login_ok:
+        record = Records(name=name, indicator='RSI', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=end, times=bai)
+        record.save()
     context = {'result': result, 'resultend': end, 'bai': bai, 'resultjpy': jpy,
-               'resultcoin': coin, 'countbuy': countbuy, 'countsell': countsell}
+               'resultcoin': coin, 'countbuy': countbuy, 'countsell': countsell, 'login_ok': login_ok, "name": name}
     return render(request, "mytrade/result.html", context)
 
 
@@ -294,6 +318,8 @@ def fib(request):
     day = int(request.GET['day'])
     val = int(request.GET['val'])/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     lists = data_get(request)
     coin, buyjpy, buycoin, countbuy, countsell, rsi, trand = 0, 0, 0, 0, 0, 0, 0
@@ -371,9 +397,12 @@ def fib(request):
     end = int(coin*lists[len(lists)-1][1]+jpy)
     bai = end/sjpy
     jpy = int(jpy)
-
+    if login_ok:
+        record = Records(name=name, indicator='Fibonacci_Retracement', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=end, times=bai)
+        record.save()
     context = {'resultjpy': jpy, 'resultcoin': coin, 'countbuy': countbuy,
-               'countsell': countsell, 'result': result, 'bai': bai, 'resultend': end}
+               'countsell': countsell, 'result': result, 'bai': bai, 'resultend': end, "login_ok": login_ok, "name": name}
     return render(request, "mytrade/result.html", context)
 
 
@@ -381,6 +410,8 @@ def st(request):
     day = int(request.GET['day'])
     val = int(request.GET['val'])/100
     sjpy = int(request.GET['sjpy'])
+    login_ok = request.GET.get('login_ok')
+    name = request.GET.get('name')
     jpy = sjpy
     lists = data_get(request)
     result = [["", 0, 0]for i in range(len(lists))]
@@ -435,9 +466,12 @@ def st(request):
     jpy = int(jpy)
     resultjpy = int(coin*lists[len(lists)-1][1])+jpy
     bai = resultjpy/sjpy
-
+    if login_ok:
+        record = Records(name=name, indicator='Stochastic_Oscillator', first_money=sjpy,
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultjpy, times=bai)
+        record.save()
     context = {'resultjpy': jpy, 'resultcoin': coin, 'resultend': resultjpy,
-               'bai': bai, 'countbuy': cb, 'countsell': cs, 'result': result}
+               'bai': bai, 'countbuy': cb, 'countsell': cs, 'result': result, "login_ok": login_ok, "name": name}
     return render(request, 'mytrade/result.html', context)
 
 
