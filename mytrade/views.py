@@ -598,3 +598,10 @@ def login(request):
     else:
         context = {'SmaForm': SmaForm, 'BreForm': BreForm}
         return render(request, 'mytrade/index.html', context)
+
+
+def mypage(request):
+    name = request.GET.get('name')
+    records = Records.objects.filter(name=name).values()
+    context = {'name': name, 'records': records}
+    return render(request, 'mytrade/my_page.html', context)

@@ -18,4 +18,5 @@ urlpatterns = [
     path('pre_register', views.pre_register, name='pre_register'),
     path('login', views.login, name='login'),
     path('pre_login', views.pre_login, name='pre_login'),
+    path('mypage', views.mypage, name='mypage'),
 ]
