@@ -591,9 +591,13 @@ def login(request):
     name = request.GET['name']
     password = request.GET['password']
     login_ok = Users.objects.filter(name=name, password=password).values()
-    records = Records.objects.filter(name=login_ok[0]['name']).values()
+    records = Records.objects.filter(
+        name=login_ok[0]['name']).values().order_by('times')
+
     if login_ok:
-        context = {'name': login_ok[0]['name'], 'records': records}
+        best = records[0]
+        context = {'name': login_ok[0]['name'],
+                   'records': records, 'best': best}
         return render(request, 'mytrade/my_page.html', context)
     else:
         context = {'SmaForm': SmaForm, 'BreForm': BreForm}
@@ -602,6 +606,7 @@ def login(request):
 
 def mypage(request):
     name = request.GET.get('name')
-    records = Records.objects.filter(name=name).values()
-    context = {'name': name, 'records': records}
+    records = Records.objects.filter(name=name).values().order_by('times')
+    best = records[0]
+    context = {'name': name, 'records': records, 'best': best}
     return render(request, 'mytrade/my_page.html', context)
