@@ -2,16 +2,44 @@
 　　　　　　　 {% endblock header %} {% block content %}
 <h1>{{name}}さん、ようこそ</h1>
 <h2>最高レコード</h2>
-{{best}}
-<table>
+<table border="2">
+  <tr>
+    <th>インジケーター</th>
+    <th>初期値</th>
+    <th>~から</th>
+    <th>~まで</th>
+    <th>最終値</th>
+    <th>倍</th>
+  </tr>
+  <tr>
+    <td>{{best.indicator}}</td>
+    <td>{{best.first_money}}</td>
+    <td>{{best.from_date}}</td>
+    <td>{{best.to_date}}</td>
+    <td>{{best.result}}</td>
+    <td>{{best.times}}</td>
+  </tr>
+</table>
+<table border="2">
   <h2>履歴</h2>
+  <tr>
+    <th>インジケーター</th>
+    <th>初期値</th>
+    <th>～から</th>
+    <th>～まで</th>
+    <th>最終値</th>
+    <th>倍</th>
+  </tr>
   {%for i in records %}
   <tr>
     <td>{{i.indicator}}</td>
     <td>{{i.first_money}}</td>
     <td>{{i.from_date}}</td>
+    <td>{{i.to_date}}</td>
     <td>{{i.result}}</td>
+    <td>{{i.times}}</td>
   </tr>
+
   {% endfor %}
 </table>
 <form action="/mytrade/">

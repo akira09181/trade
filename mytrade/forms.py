@@ -17,10 +17,9 @@ class SmaForm(forms.ModelForm):
         datetime = datetime.datetime.now()
         date = datetime.date()
         year = date.strftime('%Y')
-        print(year_from)
         widgets = {
-            'term_from': forms.SelectDateWidget(),
-            'term_to': forms.SelectDateWidget(),
+            'term_from': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
         }
 
     def clean_term_from(self):
@@ -46,8 +45,8 @@ class BreForm(forms.ModelForm):
         date = datetime.date()
         year = date.strftime('%Y')
         widgets = {
-            'term_from': forms.SelectDateWidget(),
-            'term_to': forms.SelectDateWidget(),
+            'term_from': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
         }
 
 

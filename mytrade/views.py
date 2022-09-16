@@ -592,7 +592,7 @@ def login(request):
     password = request.GET['password']
     login_ok = Users.objects.filter(name=name, password=password).values()
     records = Records.objects.filter(
-        name=login_ok[0]['name']).values().order_by('times')
+        name=login_ok[0]['name']).values().order_by('times').reverse()
 
     if login_ok:
         best = records[0]
