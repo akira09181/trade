@@ -6,9 +6,10 @@ import datetime
 class SmaForm(forms.ModelForm):
 
     candlestick = forms.fields.ChoiceField(choices=(
-        ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H',
-                                                    'BTC1時間足'), ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足')
-    ), required=False)
+        ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H', 'BTC1時間足'),
+        ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足'), ('XRP1D', 'XRP1日足'),
+        ('ETH1D', 'ETH1日足')
+    ), required=False, label='銘柄・キャンドルスティック')
 
     class Meta:
         year_from = Input.objects.all().values().order_by('date')
@@ -33,9 +34,10 @@ class SmaForm(forms.ModelForm):
 class BreForm(forms.ModelForm):
 
     candlestick = forms.fields.ChoiceField(choices=(
-        ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H',
-                                                    'BTC1時間足'), ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足')
-    ), required=False)
+        ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H', 'BTC1時間足'),
+        ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足'), ('XRP1D', 'XRP1日足'),
+        ('ETH1D', 'ETH1日足')
+    ), required=False, label='銘柄・キャンドルスティック')
 
     class Meta:
         model = Bre
