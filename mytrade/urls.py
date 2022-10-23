@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .views import views, views_get_xrp_data
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -19,4 +19,5 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('pre_login', views.pre_login, name='pre_login'),
     path('mypage', views.mypage, name='mypage'),
+    path('get_xrp', views_get_xrp_data.get_xrp, name='get_xrp')
 ]

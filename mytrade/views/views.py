@@ -7,14 +7,21 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 import math
+import json
 
-from .models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users, Records
-from .forms import SmaForm, BreForm, Inquiry, Register, Login
-from .indicator.initial_processing import data_get
+from ..models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users, Records
+from ..forms import SmaForm, BreForm, Inquiry, Register, Login
+from ..indicator.initial_processing import data_get
 
 
 # Create your views here.
 def index(request):
+    endPoint = 'https://api.coin.z.com/public'
+
+    path = '/v1/klines?symbol=XRP&interval=1day&date=2022'
+    response = requests.get(endPoint + path)
+
+    print(json.dumps(response.json(), indent=2))
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
 
