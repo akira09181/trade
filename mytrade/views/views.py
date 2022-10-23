@@ -16,15 +16,8 @@ from ..indicator.initial_processing import data_get
 
 # Create your views here.
 def index(request):
-    endPoint = 'https://api.coin.z.com/public'
-
-    path = '/v1/klines?symbol=XRP&interval=1day&date=2022'
-    response = requests.get(endPoint + path)
-
-    print(json.dumps(response.json(), indent=2))
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
-
     response = requests.get(
         'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
     bs = BeautifulSoup(response.text, "html.parser")
@@ -59,6 +52,7 @@ def sma(request):
     sjpy = int(request.GET['sjpy'])
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
+    order_validity_period = int(request.GET['minite_to_expire'])
     jpy = sjpy
     trandflag = 0
     avl = 0
