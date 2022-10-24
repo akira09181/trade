@@ -7,6 +7,10 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 import math
+<<<<<<< HEAD
+=======
+import json
+>>>>>>> 0cf357cdfa578db7bfe426ce05100790d7cdf120
 
 from ..models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users, Records
 from ..forms import SmaForm, BreForm, Inquiry, Register, Login

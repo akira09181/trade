@@ -42,6 +42,8 @@ class Sma(models.Model):
     sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
     term_from = models.DateField(default='2020-01-01', verbose_name='~から')
     term_to = models.DateField(default='2021-01-01', verbose_name='~まで')
+    minute_to_expire = models.IntegerField(
+        default=30, verbose_name="注文有効期間（日）")
 
 
 class Bre(models.Model):
@@ -50,6 +52,8 @@ class Bre(models.Model):
     sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
     term_from = models.DateField(default='2020-01-01', verbose_name='~から')
     term_to = models.DateField(default='2021-01-01', verbose_name='~まで')
+    minute_to_expire = models.IntegerField(
+        default=30, verbose_name="注文有効期間（日）")
 
 
 class Btc1M(models.Model):
