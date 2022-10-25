@@ -1,3 +1,5 @@
+from email.policy import default
+from tabnanny import verbose
 from django.db import models
 import datetime
 from django.utils import timezone
@@ -42,8 +44,6 @@ class Sma(models.Model):
     sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
     term_from = models.DateField(default='2020-01-01', verbose_name='~から')
     term_to = models.DateField(default='2021-01-01', verbose_name='~まで')
-    minute_to_expire = models.IntegerField(
-        default=30, verbose_name="注文有効期間（日）")
 
 
 class Bre(models.Model):
@@ -52,8 +52,6 @@ class Bre(models.Model):
     sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
     term_from = models.DateField(default='2020-01-01', verbose_name='~から')
     term_to = models.DateField(default='2021-01-01', verbose_name='~まで')
-    minute_to_expire = models.IntegerField(
-        default=30, verbose_name="注文有効期間（日）")
 
 
 class Btc1M(models.Model):
@@ -97,3 +95,13 @@ class Records(models.Model):
     to_date = models.DateTimeField()
     result = models.IntegerField()
     times = models.FloatField(null=True)
+
+
+class Ifd(models.Model):
+    sjpy = models.IntegerField(default=100000, verbose_name="初期の投資額")
+    minute_to_expire = models.IntegerField(
+        default=43200, verbose_name="注文有効期間(分)")
+    term_from = models.DateField(default='2020-01-01', verbose_name='~から')
+    term_to = models.DateField(default='2021-01-01', verbose_name='~まで')
+    buy_order = models.IntegerField(default=97, verbose_name="買う価格(%)")
+    sell_order = models.IntegerField(default=105, verbose_name="売る価格(%)")

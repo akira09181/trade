@@ -7,13 +7,11 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 import math
-<<<<<<< HEAD
-=======
+
 import json
->>>>>>> 0cf357cdfa578db7bfe426ce05100790d7cdf120
 
 from ..models import Input, InputHour, Btc1M, Btc4H, Btc5M, Users, Records
-from ..forms import SmaForm, BreForm, Inquiry, Register, Login
+from ..forms import SmaForm, BreForm, Inquiry, Register, Login, Ifd
 from ..indicator.initial_processing import data_get
 
 
@@ -43,7 +41,7 @@ def index(request):
     d = Input.objects.all().values().order_by('date')
 
     context = {"value": d, "num": num, "BreForm": BreForm,
-               "SmaForm": SmaForm, "login_ok": login_ok, 'name': name}
+               "SmaForm": SmaForm, "login_ok": login_ok, 'name': name, "IfdForm": Ifd}
     return render(request, "mytrade/index.html", context)
 
 

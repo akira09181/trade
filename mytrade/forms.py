@@ -1,5 +1,5 @@
 from django import forms
-from .models import Sma, Bre, Input, Inquiry, Users
+from .models import Sma, Bre, Input, Inquiry, Users, Ifd
 import datetime
 
 
@@ -68,3 +68,15 @@ class Login(forms.ModelForm):
     class Meta:
         model = Users
         fields = ('name', 'password')
+
+
+class Ifd(forms.ModelForm):
+    candlestick = forms.fields.ChoiceField(choices=(
+        ('BTC1D', 'BTC1日足'), ('BTC4H', 'BTC4時間足'), ('BTC1H', 'BTC1時間足'),
+        ('BTC5M', 'BTC5分足'), ('BTC1M', 'BTC1分足'), ('XRP1D', 'XRP1日足'),
+        ('ETH1D', 'ETH1日足')
+    ), required=False, label='銘柄・キャンドルスティック')
+
+    class Meta:
+        model = Ifd
+        fields = ('__all__')

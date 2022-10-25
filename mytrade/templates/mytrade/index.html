@@ -22,7 +22,8 @@
 それを過去のデータから考えて行きたいです。
 {% endif %}
 <h2>・<a id="ifd_order" >ifd_order</a></h2></br>
-ここでは、IFDONE注文を出して、AUTOTRADEをした場合の計算をします。
+ここでは、IFDONE注文を出して、AUTOTRADEをした場合の計算をします。<br/>
+※注文有効時間の端数は切り捨てます。
 <form action="/mytrade/ifd_order">
 {% bootstrap_form IfdForm layout='horizontal' %}
 <input type='hidden' name="login_ok" value="{{login_ok}}">
