@@ -80,3 +80,11 @@ class Ifd(forms.ModelForm):
     class Meta:
         model = Ifd
         fields = ('__all__')
+        year_from = Input.objects.all().values().order_by('date')
+        datetime = datetime.datetime.now()
+        date = datetime.date()
+        year = date.strftime('%Y')
+        widgets = {
+            'term_from': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
+            'term_to': forms.SelectDateWidget(years=[x for x in range(2015, int(year)+1)]),
+        }

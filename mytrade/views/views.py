@@ -45,6 +45,19 @@ def index(request):
     return render(request, "mytrade/index.html", context)
 
 
+def ifd_order(request):
+    lists = data_get(request)
+    start_yen = int(request.GET['sjpy'])
+    expire = int(request.GET['minute_to_expire'])
+    buy_order = int(request.GET['buy_order'])/100
+    sell_order = int(request.GET['sell_order'])/100
+    candlestick = request.GET['candlestick']
+    orders = []
+    print(buy_order, sell_order)
+    context = {}
+    return render(request, "mytrade/result.html", context)
+
+
 def sma(request):
     lists = data_get(request)
     sh = int(request.GET["short"])
@@ -53,7 +66,6 @@ def sma(request):
     sjpy = int(request.GET['sjpy'])
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
-    order_validity_period = int(request.GET['minite_to_expire'])
     jpy = sjpy
     trandflag = 0
     avl = 0

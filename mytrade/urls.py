@@ -19,5 +19,6 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('pre_login', views.pre_login, name='pre_login'),
     path('mypage', views.mypage, name='mypage'),
+    path('ifd_order', views.ifd_order, name='ifd_order'),
     path('get_xrp', views_get_xrp_data.get_xrp, name='get_xrp')
 ]
