@@ -48,12 +48,33 @@ def index(request):
 def ifd_order(request):
     lists = data_get(request)
     start_yen = int(request.GET['sjpy'])
+    trade_value = start_yen/10
+    jpy = start_yen
+    btc = 0
     expire = int(request.GET['minute_to_expire'])
     buy_order = int(request.GET['buy_order'])/100
     sell_order = int(request.GET['sell_order'])/100
     candlestick = request.GET['candlestick']
     orders = []
-    print(buy_order, sell_order)
+    print(lists[0])
+    for i in range(len(lists)):
+        buy = int(lists[i][1])*buy_order
+        sell = int(lists[i][1])*sell_order
+        flag = 0
+        if jpy >= trade_value:
+            jpy -= trade_value
+            orders.append([buy, sell, flag])
+        for j in range(len(orders)):
+            if orders[j][2] == 0:
+                if orders[j][0] < lists[i][3]:
+                    orders[j].append(btc)
+                    flag = 1
+            else:
+                if orders[j][1] > lists[i][2]:
+                    jpy += orders[j][3] * orders[j][1]
+                    orders.pop(j)
+    print(orders)
+
     context = {}
     return render(request, "mytrade/result.html", context)
 
