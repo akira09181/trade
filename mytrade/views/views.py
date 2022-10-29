@@ -56,6 +56,7 @@ def ifd_order(request):
     sell_order = int(request.GET['sell_order'])/100
     candlestick = request.GET['candlestick']
     orders = []
+    del_flag = []
     print(lists[0])
     for i in range(len(lists)):
         buy = int(lists[i][1])*buy_order
@@ -66,15 +67,21 @@ def ifd_order(request):
             orders.append([buy, sell, flag])
         for j in range(len(orders)):
             if orders[j][2] == 0:
-                if orders[j][0] < lists[i][3]:
+                if orders[j][0] < int(lists[i][3]):
                     orders[j].append(btc)
-                    flag = 1
+                    orders[j][2] = 1
             else:
-                if orders[j][1] > lists[i][2]:
+                if orders[j][1] > int(lists[i][2]):
                     jpy += orders[j][3] * orders[j][1]
-                    orders.pop(j)
-    print(orders)
-
+                    del_flag.append(j)
+        if del_flag:
+            if del_flag == [0]:
+                del orders[0]
+            else:
+                for j in range(len(del_flag)):
+                    del orders[del_flag[-j-1]]
+            del_flag = []
+    print(jpy)
     context = {}
     return render(request, "mytrade/result.html", context)
 
