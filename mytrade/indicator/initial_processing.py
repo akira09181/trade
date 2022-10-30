@@ -25,6 +25,7 @@ def data_get(request):
     if ch == 'BTC1D':
         c = Input.objects.filter(
             date__gte=term_from, date__lte=term_to).values().order_by('date')
+        print(c)
         lists = []
         for i in range(len(c)):
             li = [datetime.date(2020, 1, 1), 0, 0, 0, 0, 0]
