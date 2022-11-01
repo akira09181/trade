@@ -18,12 +18,20 @@
 <th>日本円</th>
 <th>BITCOIN</th>
 <th>rate</th>
+<th>high</th>
+<th>low</th>
+<th>合計</th>
+<th>order</th>
 {% for i in result %}
 <tr>
 <td>{{i.0}}</td>
 <td>{{i.1}}</td>
 <td>{{i.2}}</td>
 <td>{{i.3}}</td>
+<td>{{i.4}}</td>
+<td>{{i.5}}</td>
+<td>{{i.6}}</td>
+<td>{{i.7}}</td>
 </tr>
 {% endfor %}
 </table>

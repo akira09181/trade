@@ -46,6 +46,8 @@ def index(request):
 
 
 def ifd_order(request):
+    def __init__(self):
+        orders = []
     lists = data_get(request)
     start_yen = int(request.GET['sjpy'])
     trade_value = start_yen/10
@@ -54,28 +56,36 @@ def ifd_order(request):
     expire = int(request.GET['minute_to_expire'])/1440
     buy_order = int(request.GET['buy_order'])/100
     sell_order = int(request.GET['sell_order'])/100
-    orders = []
+    orders = [[0, 0, 0, 0, 0]for i in range(30)]
     del_flag = []
-    result = [["", 0, 0, 0]for i in range(len(lists))]
+    result = [["", 0, 0, 0, 0, 0, 0, []]for i in range(len(lists))]
     bitcoin = 0
+
     for i in range(len(lists)):
+        order_count = 0
         buy = int(lists[i][1])*buy_order
         sell = int(lists[i][1])*sell_order
-        flag = 0
         if jpy >= trade_value:
             jpy -= trade_value
-            orders.append([buy, sell, flag, 0, 0])
         for j in range(len(orders)):
-            orders[j][4] += 1
+            if orders[j][0] == 0:
+                orders[j] = [buy, sell, -1, 0, 0]
+                order_count += 1
+                break
+
+        for j in range(len(orders)):
+            if orders[j][0] != 0:
+                orders[j][4] += 1
             if orders[j][4] > expire:
                 del_flag.append(j)
-                if orders[j][2] == 0:
+                order_count -= 1
+                if orders[j][2] == -1:
                     jpy += trade_value
                 else:
                     jpy += orders[j][3]*lists[i][1]*0.9985
                     btc -= orders[j][3]
             else:
-                if orders[j][2] == 0:
+                if orders[j][2] == -1:
                     if orders[j][0] > int(lists[i][3]):
                         btc = trade_value/orders[j][0]
                         orders[j][3] = btc*0.9985
@@ -85,6 +95,7 @@ def ifd_order(request):
                     if orders[j][1] < int(lists[i][2]):
                         jpy += orders[j][3] * orders[j][1]*0.9985
                         del_flag.append(j)
+                        order_count -= 1
                         bitcoin -= orders[j][3]
         if del_flag:
             if del_flag == [0]:
@@ -93,17 +104,22 @@ def ifd_order(request):
                 for j in range(len(del_flag)):
                     del orders[del_flag[-j-1]]
             del_flag = []
+        record_order = orders
         result[i][0] = lists[i][0]
         result[i][1] = jpy
         result[i][2] = bitcoin
         result[i][3] = lists[i][1]
+        result[i][4] = lists[i][2]
+        result[i][5] = lists[i][3]
+        result[i][6] = order_count*trade_value+jpy+(btc*lists[i][1])
+        result[i][7] = record_order
     for i in range(len(orders)):
         if orders[i][2] == 0:
             jpy += trade_value
     resultend = jpy+bitcoin*lists[-1][1]
     bai = resultend/start_yen
     context = {'result': result, 'resultjpy': jpy,
-               'resultbitcoin': bitcoin, 'resultend': resultend, 'bai': bai}
+               'resultcoin': bitcoin, 'resultend': resultend, 'bai': bai}
     return render(request, "mytrade/result.html", context)
 
 
