@@ -19,15 +19,32 @@ from ..indicator.initial_processing import data_get
 def index(request):
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
+    endPoint = 'https://api.coin.z.com/public'
+    path = '/v1/klines?symbol=BTC&interval=1day&date=2023'
+
+    response = requests.get(endPoint + path).json()
+
+    print(datetime.datetime.utcfromtimestamp(
+        int(response['data'][0]['openTime'])/1000))
+
+    data = response['data']
+    print(data)
+    for i in data:
+        date = datetime.datetime.utcfromtimestamp(int(i['openTime'])/1000)
+        c = Input(date=date, start=int(i['open']), high=int(i['high']), low=int(
+            i['low']), end=int(i['close']), volume=float(i['volume']))
+
+        c.save()
+    d = Input.objects.all().values().order_by('date')
     '''
     response = requests.get(
         'http://nipper.work/btc/index.php?market=bitFlyer&coin=BTCJPY&periods=86400&after=1420070400')
     bs = BeautifulSoup(response.text, "html.parser")
     value = bs.find_all("td")
     lists = []
-    num = int(len(value)/6)
+    num = int(len(value)/6
     n = 0
-    for i in range(int(len(value)/6)):
+    for i in range(int(len(value)
         li = []
         for j in range(6):
             li.append(value[-(i*6+j)-1].get_text())
@@ -41,7 +58,7 @@ def index(request):
         c.save()
     d = Input.objects.all().values().order_by('date')
     '''
-    context = {"BreForm": BreForm,
+    context = {"value": d, "BreForm": BreForm,
                "SmaForm": SmaForm, "login_ok": login_ok, 'name': name, "IfdForm": Ifd}
 
     return render(request, "mytrade/index.html", context)
