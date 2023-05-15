@@ -163,30 +163,30 @@ def sma(request):
         avs = 0
         if i >= lo:
             for j in range(lo):
-                avl += int(lists[i-j]['start'])
+                avl += int(lists[i-j][1])
             avl /= lo
             for j in range(sh):
-                avs += int(lists[i-j]['start'])
+                avs += int(lists[i-j][1])
             avs /= sh
         if avl < avs and trandflag == 0:
             trandflag = 1
             buycoin = jpy*va
             jpy -= buycoin
-            bitcoin += buycoin/int(lists[i]['start'])
+            bitcoin += buycoin/int(lists[i][1])
         elif avl > avs and trandflag == 1:
             trandflag = 0
             buyjpy = bitcoin*va
             bitcoin -= bitcoin*va
-            jpy += buyjpy * int(lists[i]['start'])
-        result[i][0] = lists[i]['date']
+            jpy += buyjpy * int(lists[i][1])
+        result[i][0] = lists[i][0]
         result[i][1] = jpy
         result[i][2] = bitcoin
-    resultend = int(bitcoin*int(lists[len(lists)-1]['start'])+jpy)
+    resultend = int(bitcoin*int(lists[len(lists)-1][1])+jpy)
     bai = resultend/sjpy
     jpy = int(jpy)
     if login_ok:
         record = Records(name=name, indicator='SMA', first_money=sjpy,
-                         from_date=lists[0]['date'], to_date=lists[-1]['date'], result=resultend, times=bai)
+                         from_date=lists[0][0], to_date=lists[-1][0], result=resultend, times=bai)
         record.save()
     context = {"result": result, "resultjpy": jpy,
                "resultcoin": bitcoin, "resultend": resultend, "bai": bai, "name": name, "login_ok": login_ok}
