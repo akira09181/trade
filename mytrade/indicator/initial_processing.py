@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 
 def data_get(request):
+    print(request)
     ch = request.GET['candlestick']
     term_from_year = request.GET['term_from_year']
     term_from_month = request.GET['term_from_month']
@@ -22,6 +23,23 @@ def data_get(request):
         term_to_day = '0'+term_to_day
     term_from = term_from_year+'-'+term_from_month+'-'+term_from_day
     term_to = term_to_year+'-'+term_to_month+'-'+term_to_day
+    endPoint = 'https://api.coin.z.com/public'
+    path = '/v1/klines?symbol=BTC&interval=1day&date=2023'
+
+    response = requests.get(endPoint + path).json()
+
+    print(datetime.datetime.utcfromtimestamp(
+        int(response['data'][0]['openTime'])/1000))
+
+    data = response['data']
+    print(data)
+    for i in data:
+        date = datetime.datetime.utcfromtimestamp(int(i['openTime'])/1000)
+        c = Input(date=date, start=int(i['open']), high=int(i['high']), low=int(
+            i['low']), end=int(i['close']), volume=float(i['volume']))
+
+        c.save()
+    d = Input.objects.all().values().order_by('date')
     if ch == 'BTC1D':
         c = Input.objects.filter(
             date__gte=term_from, date__lte=term_to).values().order_by('date')
@@ -83,5 +101,4 @@ def data_get(request):
             for j in range(6):
                 li.append(value[i*6+j].get_text())
             lists.append(li)
-
-    return lists
+    return list(d)
