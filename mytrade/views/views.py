@@ -20,7 +20,7 @@ def index(request):
     login_ok = request.GET.get('login_ok')
     name = request.GET.get('name')
     endPoint = 'https://api.coin.z.com/public'
-    path = '/v1/klines?symbol=BTC&interval=1day&date=2023'
+    path = '/v1/klines?symbol=BTC&interval=1day&date=2022'
 
     response = requests.get(endPoint + path).json()
 
@@ -575,6 +575,7 @@ def st(request):
 
 def hour(request):
     # HEROKUの無料分を越えてしまうため、短いローソク足はカットしている。
+    '''前のURLがもうみれないから全面的にカット
     k = 0
     if k == 1:
         response = requests.get(
@@ -637,7 +638,27 @@ def hour(request):
                 value[(-i-1)*6+3].get_text()), end=int(value[(-i-1)*6+4].get_text()), volume=float(value[(-i-1)*6+5].get_text()))
             c.save()
     d = Btc1M.objects.all().values().order_by('date')
-    context = {'value': d, 'BreForm': BreForm, "SmaForm": SmaForm}
+    '''
+    endPoint = 'https://api.coin.z.com/public/v1/klines?symbol=BTC&interval=1day&date='
+    paths = ['2018','2019','2020','2021','2022','2023']
+    for j in range(len(paths)):
+        response = requests.get(endPoint + paths[j]).json()
+
+        print(datetime.datetime.utcfromtimestamp(
+            int(response['data'][0]['openTime'])/1000))
+
+        data = response['data']
+        print(data)
+        for i in data:
+            date = datetime.datetime.utcfromtimestamp(int(i['openTime'])/1000)
+            c = Input(date=date, start=int(i['open']), high=int(i['high']), low=int(
+                i['low']), end=int(i['close']), volume=float(i['volume']))
+
+            c.save()
+        d = Input.objects.all().values().order_by('date')
+    Bre = BreForm()
+    Sma = SmaForm()
+    context = {'value': d, 'BreForm': Bre, 'SmaForm': Sma,"IfdForm": Ifd}
     return render(request, 'mytrade/index.html', context)
 
 

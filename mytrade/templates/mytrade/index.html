@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+{% endblock header %}
+{% block content %}
 <div class = "sub_header">
     <a href = "#sma">単純移動平均線</a>
     <a href = "#bband">ボリンジャーバンド</a>
@@ -12,8 +15,6 @@
     <a href = "#stochastic">ストキャティクス</a>
     <a href = "#past_data">過去のデータ</a>
 </div>
-{% endblock header %}
-{% block content %}
 {% if login_ok %}
 <h1>{{name}}さん、ようこそ</h1>
 {% else %}
